@@ -993,14 +993,17 @@
 
     /* ── LinkedIn post mockup ── */
     .li-post {
-      background: #1b1f23;
+      background: #ffffff;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
-      max-width: 550px;
+      border-radius: 8px;
+      border: 1px solid rgba(0,0,0,0.08);
+      box-shadow: 0 0 0 1px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.06);
+      width: 100%;
+      max-width: 555px;
       margin: 0 auto;
-      transition: max-width 0.3s;
+      transition: max-width 0.3s ease;
+      overflow: hidden;
     }
-
-    .li-post.mobile { max-width: 375px; }
 
     .li-header {
       display: flex;
@@ -1013,8 +1016,8 @@
       width: 48px;
       height: 48px;
       border-radius: 50%;
-      background: var(--purple);
-      color: var(--white);
+      background: #0a66c2;
+      color: #fff;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -1028,52 +1031,70 @@
     .li-name {
       font-size: 14px;
       font-weight: 600;
-      color: rgba(255,255,255,0.9);
+      color: rgba(0,0,0,0.9);
     }
 
-    .li-title, .li-meta {
+    .li-title {
       font-size: 12px;
-      color: rgba(255,255,255,0.5);
+      color: rgba(0,0,0,0.6);
     }
 
-    .li-more {
-      color: rgba(255,255,255,0.5);
-      font-size: 20px;
-      padding: 0 4px;
+    .li-meta {
+      font-size: 12px;
+      color: rgba(0,0,0,0.6);
     }
 
     .li-content {
-      padding: 12px 16px;
+      position: relative;
+      padding: 12px 16px 4px;
     }
 
     .li-text {
       font-size: 14px;
-      line-height: 1.42;
-      color: rgba(255,255,255,0.9);
+      line-height: 20px;
+      color: rgba(0,0,0,0.9);
       white-space: pre-wrap;
       word-break: break-word;
+    }
+
+    .li-text.clamped {
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
       overflow: hidden;
     }
 
-    .li-text.truncated {}
-
     .li-see-more {
-      color: rgba(255,255,255,0.6);
+      display: none;
       font-size: 14px;
-      font-weight: 600;
+      font-weight: 400;
+      color: rgba(0,0,0,0.6);
       cursor: pointer;
-      padding: 2px 0;
+      background: none;
+      border: none;
+      padding: 0;
+      font-family: inherit;
     }
 
-    .li-see-more:hover { color: rgba(255,255,255,0.8); }
+    .li-see-more.visible {
+      display: inline;
+    }
+
+    .li-see-more.floating {
+      position: absolute;
+      right: 16px;
+      bottom: 4px;
+      background: #ffffff;
+      padding-left: 4px;
+    }
+
+    .li-see-more:hover { color: #0a66c2; text-decoration: underline; }
 
     .li-engagement {
       display: flex;
       justify-content: space-between;
       align-items: center;
       padding: 8px 16px;
-      border-top: 1px solid rgba(255,255,255,0.08);
-      border-bottom: 1px solid rgba(255,255,255,0.08);
     }
 
     .li-reactions {
@@ -1081,14 +1102,18 @@
       align-items: center;
       gap: 4px;
       font-size: 12px;
-      color: rgba(255,255,255,0.5);
+      color: rgba(0,0,0,0.6);
     }
-
-    .li-reaction-icons { font-size: 16px; }
 
     .li-comments-count {
       font-size: 12px;
-      color: rgba(255,255,255,0.5);
+      color: rgba(0,0,0,0.6);
+    }
+
+    .li-divider {
+      border: none;
+      border-top: 1px solid rgba(0,0,0,0.08);
+      margin: 0 16px;
     }
 
     .li-actions {
@@ -1100,11 +1125,23 @@
     .li-action-btn {
       background: none;
       border: none;
-      color: rgba(255,255,255,0.5);
+      color: rgba(0,0,0,0.6);
       font-size: 12px;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
       padding: 10px 6px;
       font-weight: 600;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+
+    .li-action-btn:hover { background: rgba(0,0,0,0.06); }
+
+    /* Preview feed background */
+    .li-feed-bg {
+      background: #f4f2ee;
+      border-radius: 8px;
+      padding: 16px;
+      min-height: 200px;
     }
 
     /* ── Responsive ── */
@@ -1496,7 +1533,7 @@
 
       <!-- Preview panel -->
       <div style="flex:1;min-width:0;">
-        <div class="card">
+        <div class="card" style="padding-bottom:8px;">
           <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
             <div class="card-title" style="margin:0;">Preview LinkedIn</div>
             <div class="device-toggle">
@@ -1504,8 +1541,8 @@
               <button class="device-btn" id="dev-mobile" onclick="setDevice('mobile')">Mobile</button>
             </div>
           </div>
-          <div style="display:flex;justify-content:center;">
-            <div class="li-post" id="li-post" style="width:100%;max-width:550px;">
+          <div class="li-feed-bg">
+            <div class="li-post" id="li-post">
               <div class="li-header">
                 <div class="li-avatar" id="li-avatar">PH</div>
                 <div class="li-author-info">
@@ -1515,13 +1552,14 @@
                 </div>
               </div>
               <div class="li-content">
-                <div class="li-text" id="li-text"><span style="color:#666">Ton post appara&icirc;tra ici...</span></div>
-                <span class="li-see-more" id="li-see-more" onclick="toggleSeeMore()" style="display:none">...voir plus</span>
+                <div class="li-text clamped" id="li-text"><span style="color:#999">Ton post appara&icirc;tra ici...</span></div>
+                <button class="li-see-more" id="li-see-more" onclick="toggleSeeMore()">...voir plus</button>
               </div>
               <div class="li-engagement">
                 <div class="li-reactions">&#128077;&#10084;&#65039;&#128161; 42</div>
-                <div style="color:#b0b0b0;">7 commentaires</div>
+                <div style="color:rgba(0,0,0,0.6);font-size:12px;">7 commentaires</div>
               </div>
+              <hr class="li-divider">
               <div class="li-actions">
                 <button class="li-action-btn">&#128077; J'aime</button>
                 <button class="li-action-btn">&#128172; Commenter</button>
@@ -2694,39 +2732,51 @@ function updatePreview() {
   var seeMoreEl = document.getElementById('li-see-more');
 
   if (!text.trim()) {
-    textEl.innerHTML = '<span style="color:#666">Ton post appara\u00eetra ici...</span>';
-    seeMoreEl.style.display = 'none';
+    textEl.innerHTML = '<span style="color:#999">Ton post appara\u00eetra ici...</span>';
+    textEl.classList.remove('clamped');
+    seeMoreEl.classList.remove('visible', 'floating');
   } else {
     previewExpanded = false;
-    applyTruncation(text);
+    textEl.textContent = text;
+    checkOverflow();
   }
 
   // Update char counter
   updateCharCounter(text.length);
 }
 
-function applyTruncation(text) {
-  var textEl = document.getElementById('li-text');
-  var seeMoreEl = document.getElementById('li-see-more');
-  var limit = previewDevice === 'desktop' ? 210 : 140;
+// Detect if text overflows 3 lines and show/hide "...voir plus"
+function checkOverflow() {
+  setTimeout(function() {
+    var textEl = document.getElementById('li-text');
+    var seeMoreEl = document.getElementById('li-see-more');
+    if (!textEl) return;
 
-  if (previewExpanded || text.length <= limit) {
-    textEl.textContent = text;
-    textEl.style.whiteSpace = 'pre-wrap';
-    seeMoreEl.style.display = previewExpanded && text.length > limit ? 'inline' : 'none';
-    if (previewExpanded) seeMoreEl.textContent = '...voir moins';
-  } else {
-    textEl.textContent = text.substring(0, limit);
-    textEl.style.whiteSpace = 'pre-wrap';
-    seeMoreEl.style.display = 'inline';
-    seeMoreEl.textContent = '...voir plus';
-  }
+    // Temporarily clamp to measure
+    textEl.classList.add('clamped');
+    var lineHeight = parseInt(window.getComputedStyle(textEl).lineHeight) || 20;
+    var maxH = lineHeight * 3;
+    var isOverflowing = textEl.scrollHeight > maxH;
+
+    if (isOverflowing && !previewExpanded) {
+      textEl.classList.add('clamped');
+      seeMoreEl.classList.add('visible', 'floating');
+      seeMoreEl.textContent = '...voir plus';
+    } else if (previewExpanded) {
+      textEl.classList.remove('clamped');
+      seeMoreEl.classList.add('visible');
+      seeMoreEl.classList.remove('floating');
+      seeMoreEl.textContent = '...voir moins';
+    } else {
+      textEl.classList.remove('clamped');
+      seeMoreEl.classList.remove('visible', 'floating');
+    }
+  }, 0);
 }
 
 function toggleSeeMore() {
   previewExpanded = !previewExpanded;
-  var text = document.getElementById('prev-text').value;
-  applyTruncation(text);
+  checkOverflow();
 }
 
 function setDevice(device) {
@@ -2735,12 +2785,11 @@ function setDevice(device) {
   document.getElementById('dev-mobile').classList.toggle('active', device === 'mobile');
 
   var post = document.getElementById('li-post');
-  post.style.maxWidth = device === 'desktop' ? '550px' : '375px';
+  post.style.maxWidth = device === 'desktop' ? '555px' : '320px';
 
-  // Re-apply truncation
+  // Re-check overflow with new width
   previewExpanded = false;
-  var text = document.getElementById('prev-text').value;
-  if (text.trim()) applyTruncation(text);
+  checkOverflow();
 }
 
 function updateCharCounter(count) {
