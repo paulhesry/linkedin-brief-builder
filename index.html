@@ -1,0 +1,2074 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LinkedIn Brief Builder</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black:  #00001d;
+      --purple: #6100ff;
+      --yellow: #ffc500;
+      --white:  #ffffff;
+      --bg:           #00001d;
+      --bg-card:      #07072a;
+      --bg-input:     #0d0d38;
+      --bg-deep:      #040420;
+      --border:       #1c1c45;
+      --border-input: #20205a;
+      --border-focus: #6100ff;
+      --text:         #ffffff;
+      --text-2:       #c0c0d8;
+      --text-muted:   #7070a0;
+      --green:     #22c55e;
+      --green-bg:  rgba(34,197,94,.07);
+      --green-b:   rgba(34,197,94,.2);
+      --orange:    #f97316;
+      --orange-bg: rgba(249,115,22,.07);
+      --orange-b:  rgba(249,115,22,.2);
+      --red:       #ef4444;
+      --red-bg:    rgba(239,68,68,.07);
+      --red-b:     rgba(239,68,68,.2);
+      --yellow-bg: rgba(255,197,0,.07);
+      --yellow-b:  rgba(255,197,0,.2);
+      --purple-bg: rgba(97,0,255,.07);
+      --purple-b:  rgba(97,0,255,.2);
+    }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 32px 16px 80px;
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.5;
+    }
+
+    .wrap { max-width: 720px; margin: 0 auto; }
+
+    /* ── Nav tabs ── */
+    .nav-tabs {
+      display: flex;
+      gap: 4px;
+      background: var(--bg-deep);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 4px;
+      margin-bottom: 28px;
+    }
+
+    .nav-tab {
+      flex: 1;
+      padding: 10px 16px;
+      border: none;
+      border-radius: 7px;
+      background: transparent;
+      color: var(--text-muted);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .nav-tab.active {
+      background: var(--purple);
+      color: var(--white);
+    }
+
+    .nav-tab:hover:not(.active) {
+      color: var(--text-2);
+    }
+
+    /* ── Header ── */
+    .header { text-align: center; margin-bottom: 28px; }
+
+    h1 {
+      font-size: 26px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+      margin-bottom: 8px;
+    }
+
+    .subtitle {
+      font-size: 14px;
+      color: var(--text-2);
+      line-height: 1.6;
+    }
+
+    /* ── Card ── */
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 13px;
+      padding: 24px;
+      margin-bottom: 16px;
+    }
+
+    .card-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .card-title .step-num {
+      background: var(--purple);
+      color: var(--white);
+      font-size: 11px;
+      font-weight: 700;
+      width: 22px;
+      height: 22px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    /* ── Fields ── */
+    .field { margin-bottom: 18px; }
+    .field:last-child { margin-bottom: 0; }
+
+    label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+
+    .label-sub {
+      font-weight: 400;
+      color: var(--text-muted);
+      font-size: 11px;
+      display: block;
+      margin-top: 2px;
+    }
+
+    /* ── Inputs ── */
+    .input-wrap input,
+    .input-wrap textarea {
+      width: 100%;
+      background: var(--bg-input);
+      border: 1px solid var(--border-input);
+      border-radius: 9px;
+      padding: 11px 14px;
+      color: var(--text);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 13px;
+      line-height: 1.5;
+      outline: none;
+      transition: border-color 0.15s;
+      resize: vertical;
+    }
+
+    .input-wrap input:focus,
+    .input-wrap textarea:focus {
+      border-color: var(--border-focus);
+    }
+
+    .input-wrap input::placeholder,
+    .input-wrap textarea::placeholder {
+      color: var(--text-muted);
+    }
+
+    /* ── Select ── */
+    .select-wrap {
+      position: relative;
+    }
+
+    .select-wrap select {
+      width: 100%;
+      background: var(--bg-input);
+      border: 1px solid var(--border-input);
+      border-radius: 9px;
+      padding: 11px 36px 11px 14px;
+      color: var(--text);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 13px;
+      outline: none;
+      appearance: none;
+      cursor: pointer;
+      transition: border-color 0.15s;
+    }
+
+    .select-wrap select:focus {
+      border-color: var(--border-focus);
+    }
+
+    .sel-arrow {
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      font-size: 12px;
+      pointer-events: none;
+    }
+
+    /* ── Progress bar ── */
+    .steps-bar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      margin-bottom: 24px;
+      padding: 0 8px;
+    }
+
+    .step-dot {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--bg-input);
+      border: 2px solid var(--border-input);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-muted);
+      transition: all 0.3s;
+      flex-shrink: 0;
+    }
+
+    .step-dot.active {
+      background: var(--purple);
+      border-color: var(--purple);
+      color: var(--white);
+    }
+
+    .step-dot.done {
+      background: var(--purple);
+      border-color: var(--purple);
+      color: var(--white);
+    }
+
+    .step-conn {
+      height: 2px;
+      flex: 1;
+      background: var(--border-input);
+      transition: background 0.3s;
+      max-width: 60px;
+    }
+
+    .step-conn.done {
+      background: var(--purple);
+    }
+
+    /* ── Step panels ── */
+    .steps-wrap {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .step-panel {
+      display: none;
+      animation: fadeSlideIn 0.3s ease;
+    }
+
+    .step-panel.active {
+      display: block;
+    }
+
+    @keyframes fadeSlideIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── Day selector ── */
+    .day-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 6px;
+    }
+
+    .day-btn {
+      padding: 10px 4px;
+      border: 1px solid var(--border-input);
+      border-radius: 8px;
+      background: var(--bg-input);
+      color: var(--text-2);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+      text-align: center;
+    }
+
+    .day-btn:hover:not(.selected) {
+      border-color: rgba(97,0,255,.4);
+    }
+
+    .day-btn.selected {
+      border-color: var(--purple);
+      background: rgba(97,0,255,.12);
+      color: var(--white);
+    }
+
+    /* ── Option cards ── */
+    .option-cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .option-cards.cols-2 {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .option-card {
+      background: var(--bg-input);
+      border: 1px solid var(--border-input);
+      border-radius: 10px;
+      padding: 16px 12px;
+      cursor: pointer;
+      transition: all 0.15s;
+      text-align: center;
+    }
+
+    .option-card:hover:not(.selected) {
+      border-color: rgba(97,0,255,.4);
+    }
+
+    .option-card.selected {
+      border-color: var(--purple);
+      background: rgba(97,0,255,.1);
+      box-shadow: 0 0 0 1px rgba(97,0,255,.2);
+    }
+
+    .option-card .card-icon {
+      font-size: 22px;
+      margin-bottom: 6px;
+    }
+
+    .option-card .card-label {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 3px;
+    }
+
+    .option-card .card-desc {
+      font-size: 10px;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    /* ── Warning badge ── */
+    .warning-badge {
+      background: var(--yellow-bg);
+      border: 1px solid var(--yellow-b);
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-size: 12px;
+      color: var(--yellow);
+      margin-top: 12px;
+      display: none;
+    }
+
+    .warning-badge.visible {
+      display: block;
+    }
+
+    /* ── Word count badge ── */
+    .word-badge {
+      background: var(--purple-bg);
+      border: 1px solid var(--purple-b);
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-size: 12px;
+      color: var(--text-2);
+      margin-top: 12px;
+      text-align: center;
+      display: none;
+    }
+
+    .word-badge.visible {
+      display: block;
+    }
+
+    .word-badge strong {
+      color: var(--purple);
+      font-weight: 700;
+    }
+
+    /* ── Navigation buttons ── */
+    .step-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 20px;
+      gap: 12px;
+    }
+
+    .btn-back {
+      padding: 10px 20px;
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      background: transparent;
+      color: var(--text-2);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .btn-back:hover {
+      border-color: var(--text-muted);
+      color: var(--text);
+    }
+
+    .btn-next, .btn-generate {
+      padding: 10px 24px;
+      border: none;
+      border-radius: 9px;
+      background: var(--purple);
+      color: var(--white);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .btn-next:hover, .btn-generate:hover {
+      background: #7722ff;
+    }
+
+    .btn-generate {
+      background: var(--yellow);
+      color: var(--black);
+    }
+
+    .btn-generate:hover {
+      background: #e6b200;
+    }
+
+    .spacer { flex: 1; }
+
+    /* ── Brief output ── */
+    .brief-section {
+      display: none;
+    }
+
+    .brief-section.visible {
+      display: block;
+      animation: fadeSlideIn 0.3s ease;
+    }
+
+    .brief-block {
+      background: var(--bg-deep);
+      border: 1px solid var(--border);
+      border-radius: 11px;
+      padding: 20px;
+      font-size: 13px;
+      color: var(--text-2);
+      line-height: 1.8;
+      white-space: pre-wrap;
+      word-break: break-word;
+      margin-bottom: 14px;
+    }
+
+    .brief-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .btn-action {
+      padding: 10px 20px;
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      background: var(--bg-card);
+      color: var(--text);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-action:hover {
+      border-color: var(--purple);
+    }
+
+    .btn-action.primary {
+      background: var(--purple);
+      border-color: var(--purple);
+      color: var(--white);
+    }
+
+    .btn-action.primary:hover {
+      background: #7722ff;
+    }
+
+    .btn-action.gold {
+      background: var(--yellow);
+      border-color: var(--yellow);
+      color: var(--black);
+    }
+
+    .btn-action.gold:hover {
+      background: #e6b200;
+    }
+
+    /* ── Toast ── */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(80px);
+      background: var(--purple);
+      color: var(--white);
+      padding: 12px 24px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 600;
+      z-index: 999;
+      transition: transform 0.3s ease;
+      pointer-events: none;
+    }
+
+    .toast.show {
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* ── Monthly calendar ── */
+    .cal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+
+    .cal-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text);
+      text-transform: capitalize;
+    }
+
+    .cal-nav {
+      display: flex;
+      gap: 4px;
+    }
+
+    .cal-nav-btn {
+      width: 28px;
+      height: 28px;
+      border: 1px solid var(--border-input);
+      border-radius: 7px;
+      background: var(--bg-input);
+      color: var(--text-muted);
+      font-size: 14px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.15s;
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    .cal-nav-btn:hover {
+      border-color: var(--purple);
+      color: var(--text);
+    }
+
+    .cal-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 3px;
+    }
+
+    .cal-weekday {
+      text-align: center;
+      font-size: 9px;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 4px 0;
+    }
+
+    .cal-cell {
+      aspect-ratio: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      border-radius: 7px;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-muted);
+      position: relative;
+      cursor: default;
+      transition: all 0.15s;
+    }
+
+    .cal-cell.current-month {
+      color: var(--text-2);
+    }
+
+    .cal-cell.today {
+      border: 1px solid var(--yellow);
+      color: var(--yellow);
+      font-weight: 700;
+    }
+
+    .cal-cell.has-brief {
+      cursor: pointer;
+    }
+
+    .cal-cell.has-brief::after {
+      content: '';
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--purple);
+      position: absolute;
+      bottom: 3px;
+    }
+
+    .cal-cell.has-brief:hover {
+      background: var(--purple-bg);
+    }
+
+    /* ── Calendar tooltip ── */
+    .cal-tooltip {
+      position: fixed;
+      background: var(--bg-card);
+      border: 1px solid var(--purple-b);
+      border-radius: 8px;
+      padding: 8px 12px;
+      font-size: 11px;
+      color: var(--text-2);
+      z-index: 100;
+      pointer-events: none;
+      white-space: nowrap;
+      display: none;
+    }
+
+    .cal-tooltip.visible {
+      display: block;
+    }
+
+    .cal-tooltip strong {
+      color: var(--purple);
+    }
+
+    /* ── History section ── */
+    .history-section {
+      display: none;
+    }
+
+    .history-section.visible {
+      display: block;
+      animation: fadeSlideIn 0.3s ease;
+    }
+
+    .history-actions {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+
+    .history-list {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .history-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      padding: 12px 14px;
+      transition: all 0.15s;
+    }
+
+    .history-item:hover {
+      border-color: var(--purple-b);
+    }
+
+    .history-meta {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .history-date {
+      font-size: 11px;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .history-subject {
+      font-size: 13px;
+      color: var(--text);
+      font-weight: 600;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .history-tags {
+      display: flex;
+      gap: 4px;
+      margin-top: 4px;
+      flex-wrap: wrap;
+    }
+
+    .history-tag {
+      font-size: 10px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 4px;
+      background: var(--purple-bg);
+      color: var(--purple);
+      border: 1px solid var(--purple-b);
+    }
+
+    .history-tag.target {
+      background: var(--yellow-bg);
+      color: var(--yellow);
+      border-color: var(--yellow-b);
+    }
+
+    .history-btns {
+      display: flex;
+      gap: 4px;
+      flex-shrink: 0;
+    }
+
+    .btn-sm {
+      padding: 6px 12px;
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      background: transparent;
+      color: var(--text-muted);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .btn-sm:hover {
+      border-color: var(--purple);
+      color: var(--text);
+    }
+
+    .btn-sm.danger:hover {
+      border-color: var(--red);
+      color: var(--red);
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 32px 16px;
+      color: var(--text-muted);
+      font-size: 13px;
+    }
+
+    /* ── History brief viewer ── */
+    .history-viewer {
+      display: none;
+      margin-bottom: 16px;
+    }
+
+    .history-viewer.visible {
+      display: block;
+      animation: fadeSlideIn 0.3s ease;
+    }
+
+    /* ── Form divider ── */
+    .form-divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 16px 0;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 520px) {
+      .day-grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+
+      .option-cards {
+        grid-template-columns: 1fr;
+      }
+
+      .brief-actions {
+        flex-direction: column;
+      }
+
+      .btn-action {
+        justify-content: center;
+      }
+
+      .history-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+      }
+
+      .history-btns {
+        width: 100%;
+      }
+
+      .history-btns .btn-sm {
+        flex: 1;
+        text-align: center;
+      }
+
+      h1 { font-size: 22px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <!-- Nav tabs -->
+  <div class="nav-tabs">
+    <button class="nav-tab active" onclick="switchTab('brief')">Nouveau brief</button>
+    <button class="nav-tab" onclick="switchTab('history')">Historique</button>
+  </div>
+
+  <!-- ═══ BRIEF TAB ═══ -->
+  <div id="tab-brief">
+
+    <div class="header">
+      <h1>LinkedIn Brief Builder</h1>
+      <p class="subtitle">Cr&eacute;e ton brief en 6 &eacute;tapes, copie-le et colle-le dans Claude.</p>
+    </div>
+
+    <!-- Progress bar -->
+    <div class="steps-bar" id="steps-bar">
+      <div class="step-dot active" data-step="1">1</div>
+      <div class="step-conn" data-conn="1"></div>
+      <div class="step-dot" data-step="2">2</div>
+      <div class="step-conn" data-conn="2"></div>
+      <div class="step-dot" data-step="3">3</div>
+      <div class="step-conn" data-conn="3"></div>
+      <div class="step-dot" data-step="4">4</div>
+      <div class="step-conn" data-conn="4"></div>
+      <div class="step-dot" data-step="5">5</div>
+      <div class="step-conn" data-conn="5"></div>
+      <div class="step-dot" data-step="6">6</div>
+    </div>
+
+    <!-- Steps -->
+    <div class="steps-wrap" id="steps-wrap">
+
+      <!-- Step 1: Day -->
+      <div class="step-panel active" id="step-1">
+        <div class="card">
+          <div class="card-title"><span class="step-num">1</span> Jour de publication</div>
+          <div class="field">
+            <label>Quel jour publies-tu ce post ?</label>
+            <div class="day-grid" id="day-grid"></div>
+          </div>
+          <div class="field" style="margin-top:18px;">
+            <label>Calendrier <span class="label-sub">Les jours avec un brief sont marqu&eacute;s d'un point violet</span></label>
+            <div id="cal-step1"></div>
+          </div>
+        </div>
+        <div class="step-nav">
+          <div class="spacer"></div>
+          <button class="btn-next" onclick="nextStep()">Suivant &#8594;</button>
+        </div>
+      </div>
+
+      <!-- Step 2: Target -->
+      <div class="step-panel" id="step-2">
+        <div class="card">
+          <div class="card-title"><span class="step-num">2</span> Ta cible</div>
+          <div class="field">
+            <label>A qui s'adresse ce post ?</label>
+            <div class="option-cards cols-2" id="target-cards">
+              <div class="option-card selected" data-value="decideur" onclick="selectTarget(this)">
+                <div class="card-icon">&#127919;</div>
+                <div class="card-label">D&eacute;cideur</div>
+                <div class="card-desc">CMO, founder, Head of Growth &mdash; langage business</div>
+              </div>
+              <div class="option-card" data-value="praticien" onclick="selectTarget(this)">
+                <div class="card-icon">&#128295;</div>
+                <div class="card-label">Praticien</div>
+                <div class="card-desc">Growth marketer, media buyer &mdash; jargon technique OK</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="step-nav">
+          <button class="btn-back" onclick="prevStep()">&#8592; Retour</button>
+          <button class="btn-next" onclick="nextStep()">Suivant &#8594;</button>
+        </div>
+      </div>
+
+      <!-- Step 3: Category -->
+      <div class="step-panel" id="step-3">
+        <div class="card">
+          <div class="card-title"><span class="step-num">3</span> Cat&eacute;gorie</div>
+          <div class="field">
+            <label>Quel type de contenu ?</label>
+            <div class="option-cards" id="category-cards"></div>
+          </div>
+          <div class="warning-badge" id="warning-educatif">&#9888;&#65039; D&eacute;j&agrave; un &Eacute;ducatif cette semaine</div>
+          <div class="warning-badge" id="warning-praticien">&#9888;&#65039; D&eacute;j&agrave; un post Praticien cette semaine</div>
+        </div>
+        <div class="step-nav">
+          <button class="btn-back" onclick="prevStep()">&#8592; Retour</button>
+          <button class="btn-next" onclick="nextStep()">Suivant &#8594;</button>
+        </div>
+      </div>
+
+      <!-- Step 4: Angle -->
+      <div class="step-panel" id="step-4">
+        <div class="card">
+          <div class="card-title"><span class="step-num">4</span> Angle</div>
+          <div class="field">
+            <label>Quel angle pour ce post ? <span class="label-sub">Options basees sur ta categorie</span></label>
+            <div class="option-cards" id="angle-cards"></div>
+          </div>
+        </div>
+        <div class="step-nav">
+          <button class="btn-back" onclick="prevStep()">&#8592; Retour</button>
+          <button class="btn-next" onclick="nextStep()">Suivant &#8594;</button>
+        </div>
+      </div>
+
+      <!-- Step 5: Format -->
+      <div class="step-panel" id="step-5">
+        <div class="card">
+          <div class="card-title"><span class="step-num">5</span> Format</div>
+          <div class="field">
+            <label>Quel format pour ce post ?</label>
+            <div class="option-cards cols-2" id="format-cards"></div>
+          </div>
+          <div class="word-badge" id="word-badge">
+            <strong id="word-range"></strong> mots recommandes
+          </div>
+          <div class="word-badge visible" style="margin-top:8px; color:var(--yellow); background:var(--yellow-bg); border-color:var(--yellow-b);">
+            Rappel : <strong style="color:var(--yellow);">3 000 caracteres max</strong> pour un post LinkedIn
+          </div>
+        </div>
+        <div class="step-nav">
+          <button class="btn-back" onclick="prevStep()">&#8592; Retour</button>
+          <button class="btn-next" onclick="nextStep()">Suivant &#8594;</button>
+        </div>
+      </div>
+
+      <!-- Step 6: Details -->
+      <div class="step-panel" id="step-6">
+        <div class="card">
+          <div class="card-title"><span class="step-num">6</span> D&eacute;tails du brief</div>
+
+          <div class="field">
+            <label>Structure sugg&eacute;r&eacute;e <span class="label-sub">Modifiable &mdash; elle sera incluse dans le brief</span></label>
+            <div class="input-wrap">
+              <textarea id="input-structure" rows="2" placeholder="Hook > Contexte > ..."></textarea>
+            </div>
+          </div>
+
+          <hr class="form-divider">
+
+          <div class="field">
+            <label>Sujet / Id&eacute;e <span class="label-sub">De quoi parle ce post ? (obligatoire)</span></label>
+            <div class="input-wrap">
+              <textarea id="input-subject" rows="2" placeholder="Ex : Pourquoi 90% des landing pages B2B ne convertissent pas"></textarea>
+            </div>
+          </div>
+
+          <hr class="form-divider">
+
+          <div class="field">
+            <label>Case study <span class="label-sub">Optionnel &mdash; un cas concret &agrave; illustrer</span></label>
+            <div class="select-wrap">
+              <select id="input-casestudy" onchange="toggleCaseOther()">
+                <option value="">Aucun</option>
+                <option value="Omi (x10 clients, CAC ÷2)">Omi (x10 clients, CAC ÷2)</option>
+                <option value="Abyssale (x3 abos, CAC ÷2)">Abyssale (x3 abos, CAC ÷2)</option>
+                <option value="Yelda (CPL ÷7)">Yelda (CPL ÷7)</option>
+                <option value="__other__">Autre...</option>
+              </select>
+              <span class="sel-arrow">&#9662;</span>
+            </div>
+            <div class="input-wrap" id="casestudy-other-wrap" style="display:none; margin-top:8px;">
+              <input type="text" id="input-casestudy-other" placeholder="D&eacute;cris ton case study">
+            </div>
+          </div>
+
+          <hr class="form-divider">
+
+          <div class="field">
+            <label>Chiffres / data disponibles <span class="label-sub">Optionnel &mdash; quels chiffres concrets tu as sous la main ?</span></label>
+            <div class="input-wrap">
+              <textarea id="input-data" rows="2" placeholder="Ex : +340% de leads en 3 mois, CAC passe de 120€ a 45€"></textarea>
+            </div>
+          </div>
+
+          <hr class="form-divider">
+
+          <div class="field">
+            <label>Objectif principal du post <span class="label-sub">Qu'est-ce que tu veux que le lecteur fasse ?</span></label>
+            <div class="option-cards" style="grid-template-columns: repeat(3, 1fr);" id="objective-cards">
+              <div class="option-card" data-value="DMs" onclick="selectObjective(this)">
+                <div class="card-label">DMs</div>
+              </div>
+              <div class="option-card" data-value="Commentaires qualifi&eacute;s" onclick="selectObjective(this)">
+                <div class="card-label">Commentaires qualifi&eacute;s</div>
+              </div>
+              <div class="option-card" data-value="Saves-partages" onclick="selectObjective(this)">
+                <div class="card-label">Saves-partages</div>
+              </div>
+            </div>
+          </div>
+
+          <hr class="form-divider">
+
+          <div class="field">
+            <label>Notes suppl&eacute;mentaires <span class="label-sub">Optionnel</span></label>
+            <div class="input-wrap">
+              <textarea id="input-notes" rows="2" placeholder="Tout ce que tu veux ajouter au brief..."></textarea>
+            </div>
+          </div>
+        </div>
+
+        <div class="step-nav">
+          <button class="btn-back" onclick="prevStep()">&#8592; Retour</button>
+          <button class="btn-generate" onclick="generateBrief()">G&eacute;n&eacute;rer le brief &#10024;</button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Brief output -->
+    <div class="brief-section" id="brief-section">
+      <div class="card">
+        <div class="card-title">Ton brief</div>
+        <div class="brief-block" id="brief-block"></div>
+        <div class="brief-actions">
+          <button class="btn-action primary" onclick="copyBrief()">&#128203; Copier</button>
+          <button class="btn-action gold" onclick="saveBrief()">&#128190; Sauvegarder</button>
+          <button class="btn-action" onclick="resetForm()">&#10133; Nouveau brief</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ═══ HISTORY TAB ═══ -->
+  <div id="tab-history" class="history-section">
+    <div class="header">
+      <h1>Historique</h1>
+      <p class="subtitle">Tous tes briefs sauvegard&eacute;s.</p>
+    </div>
+
+    <div id="cal-history" style="margin-bottom:20px;"></div>
+
+    <div class="history-actions">
+      <button class="btn-action" onclick="exportBriefs()">&#128229; Exporter JSON</button>
+      <button class="btn-action" onclick="importBriefs()">&#128228; Importer JSON</button>
+    </div>
+
+    <!-- History brief viewer -->
+    <div class="history-viewer" id="history-viewer">
+      <div class="card">
+        <div class="card-title">Brief</div>
+        <div class="brief-block" id="history-brief-block"></div>
+        <div class="brief-actions">
+          <button class="btn-action primary" onclick="copyHistoryBrief()">&#128203; Copier</button>
+          <button class="btn-action" onclick="closeHistoryViewer()">Fermer</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="history-list" id="history-list"></div>
+  </div>
+
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<!-- Tooltip for calendar -->
+<div class="cal-tooltip" id="cal-tooltip"></div>
+
+<script>
+// ============================================================
+// DATA
+// ============================================================
+
+var DAYS = [
+  { id: 'lundi',    label: 'Lun' },
+  { id: 'mardi',    label: 'Mar' },
+  { id: 'mercredi', label: 'Mer' },
+  { id: 'jeudi',    label: 'Jeu' },
+  { id: 'vendredi', label: 'Ven' },
+  { id: 'samedi',   label: 'Sam' },
+  { id: 'dimanche', label: 'Dim' }
+];
+
+var DAY_LABELS_FULL = {
+  lundi: 'Lundi', mardi: 'Mardi', mercredi: 'Mercredi',
+  jeudi: 'Jeudi', vendredi: 'Vendredi', samedi: 'Samedi', dimanche: 'Dimanche'
+};
+
+var CATEGORIES = [
+  { id: 'storytelling', icon: '\uD83D\uDCDA', label: 'Storytelling / Probl\u00e8me', desc: 'Histoire ou situation pour cr\u00e9er une connexion' },
+  { id: 'educatif',     icon: '\uD83C\uDF93', label: '\u00C9ducatif',                desc: 'Montre l\'expertise, framework, m\u00e9thode' },
+  { id: 'lead-magnet',  icon: '\uD83E\uDDF2', label: 'Lead Magnet',                 desc: 'Asset en \u00e9change d\'une action' },
+  { id: 'opinion',      icon: '\uD83D\uDCA5', label: 'Opinion / Objections',         desc: 'Casser une croyance, debunker' },
+  { id: 'preuves',      icon: '\uD83D\uDCC8', label: 'Preuves / R\u00e9sultats',    desc: 'Chiffres concrets, avant/apr\u00e8s' }
+];
+
+var ANGLES = {
+  'storytelling': [
+    { id: 'etude-cas',       label: '\u00C9tude de cas client' },
+    { id: 'storytelling-perso', label: 'Storytelling perso' },
+    { id: 'avant-apres',     label: 'Transformation Avant/Apr\u00e8s' },
+    { id: 'coulisses',       label: 'Coulisses / Behind the scenes' }
+  ],
+  'educatif': [
+    { id: 'framework',       label: 'Framework / M\u00e9thode' },
+    { id: 'erreurs',         label: 'Erreurs fr\u00e9quentes' },
+    { id: 'liste-curation',  label: 'Liste / Curation' },
+    { id: 'outils',          label: 'Outils' }
+  ],
+  'lead-magnet': [
+    { id: 'calculateur',     label: 'Calculateur / Outil' },
+    { id: 'guide',           label: 'Guide / Playbook' },
+    { id: 'template',        label: 'Template / Checklist' },
+    { id: 'audit',           label: 'Audit gratuit' }
+  ],
+  'opinion': [
+    { id: 'prise-position',  label: 'Prise de position' },
+    { id: 'debunkage',       label: 'D\u00e9bunkage mythe' },
+    { id: 'cout-inaction',   label: 'Co\u00fbt de l\'inaction' },
+    { id: 'objection',       label: 'Objection handling' }
+  ],
+  'preuves': [
+    { id: 'resultats',       label: 'R\u00e9sultats chiffr\u00e9s avant/apr\u00e8s' },
+    { id: 'citation-client', label: 'Citation client / prospect' },
+    { id: 'social-proof',    label: 'Social proof indirecte' },
+    { id: 'benchmark',       label: 'Benchmark sectoriel' }
+  ]
+};
+
+var FORMATS = [
+  { id: 'texte-seul',   icon: '\uD83D\uDCC4', label: 'Texte seul',     words: '300-600' },
+  { id: 'texte-image',  icon: '\uD83D\uDDBC\uFE0F', label: 'Texte + image', words: '200-400' },
+  { id: 'carrousel',    icon: '\uD83C\uDFA0', label: 'Carrousel',      words: '50-150' },
+  { id: 'video',        icon: '\uD83C\uDFAC', label: 'Vid\u00e9o',     words: '50-150' }
+];
+
+var STRUCTURES = {
+  'storytelling': 'Hook > Contexte > Tension > R\u00e9solution > Le\u00e7on > CTA',
+  'educatif':     'Hook > Probl\u00e8me > Framework/M\u00e9thode (\u00e9tapes) > R\u00e9cap > CTA',
+  'lead-magnet':  'Hook > Probl\u00e8me > Solution (l\'asset) > Ce qu\'il contient > CTA',
+  'opinion':      'Hook > Croyance commune > Pourquoi c\'est faux > R\u00e9alit\u00e9 > CTA',
+  'preuves':      'Hook > Contexte client > Actions > R\u00e9sultats chiffr\u00e9s > CTA'
+};
+
+var CTA_MAP = {
+  'storytelling': 'Si tu te reconnais, envoie-moi ton contexte en DM.',
+  'educatif':     'Commente [MOT] pour recevoir le guide complet / Enregistre ce post',
+  'lead-magnet':  'Commente [MOT] + ajoute-moi + like \u2192 je t\'envoie \u00e7a en DM sous 24h',
+  'opinion':      'Question ouverte / Si tu g\u00e8res +5K\u20AC/mois et tu doutes de ton setup, j\'offre un audit express de 30 min',
+  'preuves':      'Tu veux les m\u00eames r\u00e9sultats ? On commence par un audit express de 30 min.'
+};
+
+var STORAGE_KEY = 'phy-linkedin-briefs';
+
+// ============================================================
+// STATE
+// ============================================================
+
+var state = {
+  currentStep: 1,
+  day: '',
+  dayDate: null,
+  target: 'decideur',
+  category: '',
+  angle: '',
+  format: '',
+  objective: '',
+  calMonth: new Date().getMonth(),
+  calYear: new Date().getFullYear(),
+  calHistMonth: new Date().getMonth(),
+  calHistYear: new Date().getFullYear()
+};
+
+var currentBriefText = '';
+var viewingBriefText = '';
+
+// ============================================================
+// INIT
+// ============================================================
+
+(function init() {
+  renderDayGrid();
+  renderCategoryCards();
+  renderFormatCards();
+  renderCalendar('cal-step1', state.calMonth, state.calYear);
+  renderCalendar('cal-history', state.calHistMonth, state.calHistYear);
+  renderHistory();
+})();
+
+// ============================================================
+// TAB NAVIGATION
+// ============================================================
+
+function switchTab(tab) {
+  var tabs = document.querySelectorAll('.nav-tab');
+  tabs[0].classList.toggle('active', tab === 'brief');
+  tabs[1].classList.toggle('active', tab === 'history');
+
+  document.getElementById('tab-brief').style.display = tab === 'brief' ? 'block' : 'none';
+  var histEl = document.getElementById('tab-history');
+  histEl.classList.toggle('visible', tab === 'history');
+  histEl.style.display = tab === 'history' ? 'block' : 'none';
+
+  if (tab === 'history') {
+    renderCalendar('cal-history', state.calHistMonth, state.calHistYear);
+    renderHistory();
+  }
+}
+
+// ============================================================
+// STEP NAVIGATION
+// ============================================================
+
+function goToStep(n) {
+  if (n < 1 || n > 6) return;
+
+  // Hide current panel
+  var current = document.getElementById('step-' + state.currentStep);
+  if (current) current.classList.remove('active');
+
+  state.currentStep = n;
+
+  // Show new panel
+  var next = document.getElementById('step-' + n);
+  if (next) next.classList.add('active');
+
+  // Update progress bar
+  updateProgressBar();
+
+  // Render dynamic content for certain steps
+  if (n === 4) renderAngleCards();
+  if (n === 6) prefillStructure();
+
+  // Scroll to top of form
+  document.getElementById('steps-bar').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function nextStep() {
+  if (!validateStep(state.currentStep)) return;
+  goToStep(state.currentStep + 1);
+}
+
+function prevStep() {
+  goToStep(state.currentStep - 1);
+}
+
+function updateProgressBar() {
+  var dots = document.querySelectorAll('.step-dot');
+  var conns = document.querySelectorAll('.step-conn');
+
+  dots.forEach(function(dot, i) {
+    var stepNum = i + 1;
+    dot.classList.remove('active', 'done');
+    if (stepNum === state.currentStep) dot.classList.add('active');
+    else if (stepNum < state.currentStep) dot.classList.add('done');
+  });
+
+  conns.forEach(function(conn, i) {
+    conn.classList.toggle('done', i + 1 < state.currentStep);
+  });
+}
+
+function validateStep(n) {
+  if (n === 1 && !state.day) {
+    showToast('Choisis un jour de publication');
+    return false;
+  }
+  if (n === 3 && !state.category) {
+    showToast('Choisis une cat\u00e9gorie');
+    return false;
+  }
+  if (n === 4 && !state.angle) {
+    showToast('Choisis un angle');
+    return false;
+  }
+  if (n === 5 && !state.format) {
+    showToast('Choisis un format');
+    return false;
+  }
+  return true;
+}
+
+// ============================================================
+// STEP 1: DAY SELECTION
+// ============================================================
+
+function renderDayGrid() {
+  var grid = document.getElementById('day-grid');
+  grid.innerHTML = '';
+  DAYS.forEach(function(d) {
+    var btn = document.createElement('button');
+    btn.className = 'day-btn';
+    btn.textContent = d.label;
+    btn.setAttribute('data-day', d.id);
+    btn.onclick = function() { selectDay(d.id); };
+    grid.appendChild(btn);
+  });
+}
+
+function selectDay(dayId) {
+  state.day = dayId;
+  // Compute the next date matching this day name
+  var dayIndex = { lundi: 1, mardi: 2, mercredi: 3, jeudi: 4, vendredi: 5, samedi: 6, dimanche: 0 };
+  var target = dayIndex[dayId];
+  var now = new Date();
+  var currentDay = now.getDay();
+  var diff = target - currentDay;
+  if (diff < 0) diff += 7;
+  var date = new Date(now);
+  date.setDate(now.getDate() + diff);
+  state.dayDate = date;
+
+  var btns = document.querySelectorAll('.day-btn');
+  btns.forEach(function(b) {
+    b.classList.toggle('selected', b.getAttribute('data-day') === dayId);
+  });
+}
+
+// ============================================================
+// STEP 2: TARGET
+// ============================================================
+
+function selectTarget(el) {
+  state.target = el.getAttribute('data-value');
+  var cards = document.querySelectorAll('#target-cards .option-card');
+  cards.forEach(function(c) { c.classList.remove('selected'); });
+  el.classList.add('selected');
+}
+
+// ============================================================
+// STEP 3: CATEGORY
+// ============================================================
+
+function renderCategoryCards() {
+  var container = document.getElementById('category-cards');
+  container.innerHTML = '';
+  CATEGORIES.forEach(function(cat) {
+    var div = document.createElement('div');
+    div.className = 'option-card';
+    div.setAttribute('data-value', cat.id);
+    div.onclick = function() { selectCategory(div, cat.id); };
+    div.innerHTML = '<div class="card-icon">' + cat.icon + '</div>' +
+                    '<div class="card-label">' + cat.label + '</div>' +
+                    '<div class="card-desc">' + cat.desc + '</div>';
+    container.appendChild(div);
+  });
+}
+
+function selectCategory(el, catId) {
+  state.category = catId;
+  // Reset angle when category changes
+  state.angle = '';
+
+  var cards = document.querySelectorAll('#category-cards .option-card');
+  cards.forEach(function(c) { c.classList.remove('selected'); });
+  el.classList.add('selected');
+
+  // Check warnings
+  checkCategoryWarnings();
+}
+
+function checkCategoryWarnings() {
+  var weekBriefs = getBriefsForWeekOf(state.dayDate || new Date());
+
+  // Warning: already an educatif this week
+  var hasEducatif = weekBriefs.some(function(b) { return b.category === 'educatif'; });
+  var warnEdu = document.getElementById('warning-educatif');
+  warnEdu.classList.toggle('visible', state.category === 'educatif' && hasEducatif);
+
+  // Warning: already a praticien this week
+  var hasPraticien = weekBriefs.some(function(b) { return b.target === 'praticien'; });
+  var warnPrat = document.getElementById('warning-praticien');
+  warnPrat.classList.toggle('visible', state.target === 'praticien' && hasPraticien);
+}
+
+// ============================================================
+// STEP 4: ANGLE (dynamic)
+// ============================================================
+
+function renderAngleCards() {
+  var container = document.getElementById('angle-cards');
+  container.innerHTML = '';
+  var angles = ANGLES[state.category] || [];
+  angles.forEach(function(angle) {
+    var div = document.createElement('div');
+    div.className = 'option-card';
+    if (state.angle === angle.id) div.classList.add('selected');
+    div.setAttribute('data-value', angle.id);
+    div.onclick = function() { selectAngle(div, angle.id); };
+    div.innerHTML = '<div class="card-label">' + angle.label + '</div>';
+    container.appendChild(div);
+  });
+}
+
+function selectAngle(el, angleId) {
+  state.angle = angleId;
+  var cards = document.querySelectorAll('#angle-cards .option-card');
+  cards.forEach(function(c) { c.classList.remove('selected'); });
+  el.classList.add('selected');
+}
+
+// ============================================================
+// STEP 5: FORMAT
+// ============================================================
+
+function renderFormatCards() {
+  var container = document.getElementById('format-cards');
+  container.innerHTML = '';
+  FORMATS.forEach(function(fmt) {
+    var div = document.createElement('div');
+    div.className = 'option-card';
+    div.setAttribute('data-value', fmt.id);
+    div.onclick = function() { selectFormat(div, fmt); };
+    div.innerHTML = '<div class="card-icon">' + fmt.icon + '</div>' +
+                    '<div class="card-label">' + fmt.label + '</div>' +
+                    '<div class="card-desc">' + fmt.words + ' mots</div>';
+    container.appendChild(div);
+  });
+}
+
+function selectFormat(el, fmt) {
+  state.format = fmt.id;
+  var cards = document.querySelectorAll('#format-cards .option-card');
+  cards.forEach(function(c) { c.classList.remove('selected'); });
+  el.classList.add('selected');
+
+  // Show word count badge
+  var badge = document.getElementById('word-badge');
+  badge.classList.add('visible');
+  document.getElementById('word-range').textContent = fmt.words;
+}
+
+// ============================================================
+// STEP 6: DETAILS
+// ============================================================
+
+function prefillStructure() {
+  var textarea = document.getElementById('input-structure');
+  // Only prefill if empty or if category changed
+  if (!textarea.value || textarea.getAttribute('data-cat') !== state.category) {
+    textarea.value = STRUCTURES[state.category] || '';
+    textarea.setAttribute('data-cat', state.category);
+  }
+}
+
+function toggleCaseOther() {
+  var sel = document.getElementById('input-casestudy');
+  var wrap = document.getElementById('casestudy-other-wrap');
+  wrap.style.display = sel.value === '__other__' ? 'block' : 'none';
+}
+
+function selectObjective(el) {
+  state.objective = el.getAttribute('data-value');
+  var cards = document.querySelectorAll('#objective-cards .option-card');
+  cards.forEach(function(c) { c.classList.remove('selected'); });
+  el.classList.add('selected');
+}
+
+// ============================================================
+// BRIEF GENERATION
+// ============================================================
+
+function generateBrief() {
+  // Validate step 6
+  var subject = document.getElementById('input-subject').value.trim();
+  if (!subject) {
+    showToast('Le sujet est obligatoire');
+    return;
+  }
+  if (!state.objective) {
+    showToast('Choisis un objectif pour le post');
+    return;
+  }
+
+  // Collect values
+  var structure = document.getElementById('input-structure').value.trim();
+  var caseStudyVal = document.getElementById('input-casestudy').value;
+  var caseStudy = '';
+  if (caseStudyVal === '__other__') {
+    caseStudy = document.getElementById('input-casestudy-other').value.trim() || 'Autre';
+  } else if (caseStudyVal) {
+    caseStudy = caseStudyVal;
+  }
+  var dataAvail = document.getElementById('input-data').value.trim();
+  var notes = document.getElementById('input-notes').value.trim();
+
+  // Find labels
+  var catObj = CATEGORIES.find(function(c) { return c.id === state.category; });
+  var angleArr = ANGLES[state.category] || [];
+  var angleObj = angleArr.find(function(a) { return a.id === state.angle; });
+  var fmtObj = FORMATS.find(function(f) { return f.id === state.format; });
+
+  var dayLabel = DAY_LABELS_FULL[state.day] || state.day;
+  var dateStr = formatDateFR(state.dayDate || new Date());
+  var targetLabel = state.target === 'decideur' ? 'D\u00e9cideur' : 'Praticien';
+
+  // Gap rule
+  var gapRule = state.category === 'educatif'
+    ? 'NON (\u00e9ducatif = m\u00e9thode compl\u00e8te OK)'
+    : 'OUI';
+
+  // Traduction business
+  var tradBiz = state.target === 'decideur' ? 'OUI' : 'NON';
+
+  // CTA
+  var cta = CTA_MAP[state.category] || '';
+
+  // Build brief text
+  var lines = [];
+  lines.push('## Brief LinkedIn \u2014 ' + dayLabel + ' ' + dateStr);
+  lines.push('');
+  lines.push('**Cible :** ' + targetLabel);
+  lines.push('**Cat\u00e9gorie :** ' + (catObj ? catObj.label : ''));
+  lines.push('**Angle :** ' + (angleObj ? angleObj.label : ''));
+  lines.push('**Format :** ' + (fmtObj ? fmtObj.label : '') + ' (' + (fmtObj ? fmtObj.words : '') + ' mots recommand\u00e9s)');
+  lines.push('');
+  if (structure) {
+    lines.push('**Structure :** ' + structure);
+    lines.push('');
+  }
+  lines.push('**Sujet :** ' + subject);
+  lines.push('');
+  lines.push('**Case study :** ' + (caseStudy || 'Aucun'));
+  lines.push('**Chiffres disponibles :** ' + (dataAvail || 'Aucun'));
+  lines.push('');
+  lines.push('**Objectif du post :** ' + state.objective);
+  lines.push('');
+  lines.push('**Notes :** ' + (notes || '\u2014'));
+  lines.push('');
+  lines.push('---');
+  lines.push('R\u00e8gles de rappel :');
+  lines.push('- Gap rule : ' + gapRule);
+  lines.push('- Traduction business : ' + tradBiz);
+  lines.push('- CTA type sugg\u00e9r\u00e9 : ' + cta);
+
+  currentBriefText = lines.join('\n');
+
+  // Store detail values in state for saving
+  state._subject = subject;
+  state._structure = structure;
+  state._caseStudy = caseStudy;
+  state._dataAvail = dataAvail;
+  state._notes = notes;
+
+  // Display brief
+  displayBrief();
+}
+
+function displayBrief() {
+  // Hide form, show brief
+  document.getElementById('steps-wrap').style.display = 'none';
+  document.getElementById('steps-bar').style.display = 'none';
+
+  var section = document.getElementById('brief-section');
+  section.classList.add('visible');
+  section.style.display = 'block';
+  document.getElementById('brief-block').textContent = currentBriefText;
+
+  section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function copyBrief() {
+  copyToClipboard(currentBriefText);
+  showToast('Brief copi\u00e9 !');
+}
+
+function copyHistoryBrief() {
+  copyToClipboard(viewingBriefText);
+  showToast('Brief copi\u00e9 !');
+}
+
+function copyToClipboard(text) {
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).catch(function() {
+      fallbackCopy(text);
+    });
+  } else {
+    fallbackCopy(text);
+  }
+}
+
+function fallbackCopy(text) {
+  var ta = document.createElement('textarea');
+  ta.value = text;
+  ta.style.position = 'fixed';
+  ta.style.left = '-9999px';
+  document.body.appendChild(ta);
+  ta.select();
+  document.execCommand('copy');
+  document.body.removeChild(ta);
+}
+
+// ============================================================
+// SAVE BRIEF
+// ============================================================
+
+function saveBrief() {
+  var catObj = CATEGORIES.find(function(c) { return c.id === state.category; });
+  var angleArr = ANGLES[state.category] || [];
+  var angleObj = angleArr.find(function(a) { return a.id === state.angle; });
+  var fmtObj = FORMATS.find(function(f) { return f.id === state.format; });
+
+  var briefDate = state.dayDate || new Date();
+
+  var brief = {
+    id: 'brief_' + Date.now(),
+    createdAt: new Date().toISOString(),
+    briefDate: briefDate.toISOString(),
+    weekNumber: getISOWeekString(briefDate),
+    day: state.day,
+    dayLabel: DAY_LABELS_FULL[state.day] || state.day,
+    target: state.target,
+    targetLabel: state.target === 'decideur' ? 'D\u00e9cideur' : 'Praticien',
+    category: state.category,
+    categoryLabel: catObj ? catObj.label : '',
+    angle: state.angle,
+    angleLabel: angleObj ? angleObj.label : '',
+    format: state.format,
+    formatLabel: fmtObj ? fmtObj.label : '',
+    subject: state._subject || '',
+    structure: state._structure || '',
+    caseStudy: state._caseStudy || '',
+    dataAvail: state._dataAvail || '',
+    objective: state.objective,
+    notes: state._notes || '',
+    briefText: currentBriefText
+  };
+
+  var briefs = loadBriefs();
+  briefs.unshift(brief);
+  saveBriefs(briefs);
+
+  // Refresh calendars
+  renderCalendar('cal-step1', state.calMonth, state.calYear);
+  renderCalendar('cal-history', state.calHistMonth, state.calHistYear);
+
+  showToast('Brief sauvegard\u00e9 !');
+}
+
+// ============================================================
+// RESET FORM
+// ============================================================
+
+function resetForm() {
+  // Reset state
+  state.currentStep = 1;
+  state.day = '';
+  state.dayDate = null;
+  state.target = 'decideur';
+  state.category = '';
+  state.angle = '';
+  state.format = '';
+  state.objective = '';
+
+  // Reset UI
+  document.getElementById('brief-section').classList.remove('visible');
+  document.getElementById('brief-section').style.display = 'none';
+  document.getElementById('steps-wrap').style.display = 'block';
+  document.getElementById('steps-bar').style.display = 'flex';
+
+  // Reset all panels
+  document.querySelectorAll('.step-panel').forEach(function(p) { p.classList.remove('active'); });
+  document.getElementById('step-1').classList.add('active');
+  updateProgressBar();
+
+  // Reset selections
+  document.querySelectorAll('.day-btn').forEach(function(b) { b.classList.remove('selected'); });
+
+  // Reset target (decideur pre-selected)
+  var targetCards = document.querySelectorAll('#target-cards .option-card');
+  targetCards.forEach(function(c) { c.classList.remove('selected'); });
+  targetCards[0].classList.add('selected');
+
+  document.querySelectorAll('#category-cards .option-card').forEach(function(c) { c.classList.remove('selected'); });
+  document.querySelectorAll('#format-cards .option-card').forEach(function(c) { c.classList.remove('selected'); });
+  document.querySelectorAll('#objective-cards .option-card').forEach(function(c) { c.classList.remove('selected'); });
+
+  // Reset inputs
+  document.getElementById('input-structure').value = '';
+  document.getElementById('input-structure').removeAttribute('data-cat');
+  document.getElementById('input-subject').value = '';
+  document.getElementById('input-casestudy').value = '';
+  document.getElementById('input-casestudy-other').value = '';
+  document.getElementById('casestudy-other-wrap').style.display = 'none';
+  document.getElementById('input-data').value = '';
+  document.getElementById('input-notes').value = '';
+
+  // Reset word badge
+  document.getElementById('word-badge').classList.remove('visible');
+
+  // Reset warnings
+  document.getElementById('warning-educatif').classList.remove('visible');
+  document.getElementById('warning-praticien').classList.remove('visible');
+
+  // Refresh calendar
+  renderCalendar('cal-step1', state.calMonth, state.calYear);
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ============================================================
+// LOCALSTORAGE
+// ============================================================
+
+function loadBriefs() {
+  try {
+    var data = localStorage.getItem(STORAGE_KEY);
+    return data ? JSON.parse(data) : [];
+  } catch (e) {
+    return [];
+  }
+}
+
+function saveBriefs(briefs) {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(briefs));
+  } catch (e) {
+    showToast('Erreur de sauvegarde');
+  }
+}
+
+// ============================================================
+// HISTORY
+// ============================================================
+
+function renderHistory() {
+  var container = document.getElementById('history-list');
+  var briefs = loadBriefs();
+
+  if (briefs.length === 0) {
+    container.innerHTML = '<div class="empty-state">Aucun brief sauvegard\u00e9 pour le moment.</div>';
+    return;
+  }
+
+  container.innerHTML = '';
+  briefs.forEach(function(brief, index) {
+    var item = document.createElement('div');
+    item.className = 'history-item';
+
+    var dateObj = new Date(brief.createdAt);
+    var dateStr = dateObj.toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric' });
+
+    item.innerHTML =
+      '<div class="history-meta">' +
+        '<div class="history-date">' + dateStr + ' \u2014 ' + (brief.dayLabel || brief.day) + '</div>' +
+        '<div class="history-subject">' + truncate(brief.subject, 60) + '</div>' +
+        '<div class="history-tags">' +
+          '<span class="history-tag">' + (brief.categoryLabel || brief.category) + '</span>' +
+          '<span class="history-tag target">' + (brief.targetLabel || brief.target) + '</span>' +
+        '</div>' +
+      '</div>' +
+      '<div class="history-btns">' +
+        '<button class="btn-sm" onclick="viewBrief(' + index + ')">Voir</button>' +
+        '<button class="btn-sm danger" onclick="deleteBrief(' + index + ')">Suppr.</button>' +
+      '</div>';
+
+    container.appendChild(item);
+  });
+}
+
+function viewBrief(index) {
+  var briefs = loadBriefs();
+  if (!briefs[index]) return;
+  viewingBriefText = briefs[index].briefText;
+  var viewer = document.getElementById('history-viewer');
+  viewer.classList.add('visible');
+  document.getElementById('history-brief-block').textContent = viewingBriefText;
+  viewer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function closeHistoryViewer() {
+  document.getElementById('history-viewer').classList.remove('visible');
+}
+
+function deleteBrief(index) {
+  if (!confirm('Supprimer ce brief ?')) return;
+  var briefs = loadBriefs();
+  briefs.splice(index, 1);
+  saveBriefs(briefs);
+  renderHistory();
+  renderCalendar('cal-step1', state.calMonth, state.calYear);
+  renderCalendar('cal-history', state.calHistMonth, state.calHistYear);
+  showToast('Brief supprim\u00e9');
+}
+
+// ============================================================
+// EXPORT / IMPORT
+// ============================================================
+
+function exportBriefs() {
+  var briefs = loadBriefs();
+  if (briefs.length === 0) {
+    showToast('Aucun brief \u00e0 exporter');
+    return;
+  }
+  var json = JSON.stringify(briefs, null, 2);
+  var blob = new Blob([json], { type: 'application/json' });
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.href = url;
+  a.download = 'linkedin-briefs-' + new Date().toISOString().slice(0, 10) + '.json';
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+function importBriefs() {
+  var input = document.createElement('input');
+  input.type = 'file';
+  input.accept = '.json';
+  input.onchange = function(e) {
+    var file = e.target.files[0];
+    if (!file) return;
+    var reader = new FileReader();
+    reader.onload = function(evt) {
+      try {
+        var imported = JSON.parse(evt.target.result);
+        if (!Array.isArray(imported)) throw new Error('Format invalide');
+        var existing = loadBriefs();
+        var existingIds = {};
+        existing.forEach(function(b) { existingIds[b.id] = true; });
+        var newOnes = imported.filter(function(b) { return b.id && !existingIds[b.id]; });
+        var merged = newOnes.concat(existing);
+        saveBriefs(merged);
+        renderHistory();
+        renderCalendar('cal-step1', state.calMonth, state.calYear);
+        renderCalendar('cal-history', state.calHistMonth, state.calHistYear);
+        showToast(newOnes.length + ' brief(s) import\u00e9(s)');
+      } catch (err) {
+        showToast('Erreur d\'import');
+      }
+    };
+    reader.readAsText(file);
+  };
+  input.click();
+}
+
+// ============================================================
+// MONTHLY CALENDAR
+// ============================================================
+
+function renderCalendar(containerId, month, year) {
+  var container = document.getElementById(containerId);
+  if (!container) return;
+
+  var briefs = loadBriefs();
+  var isStep1 = containerId === 'cal-step1';
+
+  // Build map: dateString -> briefs[]
+  var briefMap = {};
+  briefs.forEach(function(b) {
+    var d = new Date(b.briefDate || b.createdAt);
+    var key = d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate());
+    if (!briefMap[key]) briefMap[key] = [];
+    briefMap[key].push(b);
+  });
+
+  var monthNames = ['Janvier', 'F\u00e9vrier', 'Mars', 'Avril', 'Mai', 'Juin',
+                     'Juillet', 'Ao\u00fbt', 'Septembre', 'Octobre', 'Novembre', 'D\u00e9cembre'];
+
+  var today = new Date();
+  var todayKey = today.getFullYear() + '-' + pad(today.getMonth() + 1) + '-' + pad(today.getDate());
+
+  // First day of month (0=Sun..6=Sat)
+  var firstDay = new Date(year, month, 1).getDay();
+  // Adjust to Monday start (0=Mon..6=Sun)
+  var startOffset = (firstDay + 6) % 7;
+  var daysInMonth = new Date(year, month + 1, 0).getDate();
+
+  var html = '';
+
+  // Calendar header
+  html += '<div class="cal-header">';
+  html += '<div class="cal-nav">';
+  html += '<button class="cal-nav-btn" onclick="navigateCal(\'' + containerId + '\',-1)">&lsaquo;</button>';
+  html += '</div>';
+  html += '<div class="cal-title">' + monthNames[month] + ' ' + year + '</div>';
+  html += '<div class="cal-nav">';
+  html += '<button class="cal-nav-btn" onclick="navigateCal(\'' + containerId + '\',1)">&rsaquo;</button>';
+  html += '</div>';
+  html += '</div>';
+
+  // Weekday headers
+  html += '<div class="cal-grid">';
+  ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'].forEach(function(w) {
+    html += '<div class="cal-weekday">' + w + '</div>';
+  });
+
+  // Empty cells before first day
+  for (var e = 0; e < startOffset; e++) {
+    html += '<div class="cal-cell"></div>';
+  }
+
+  // Day cells
+  for (var d = 1; d <= daysInMonth; d++) {
+    var key = year + '-' + pad(month + 1) + '-' + pad(d);
+    var dayBriefs = briefMap[key] || [];
+    var isToday = key === todayKey;
+    var classes = 'cal-cell current-month';
+    if (isToday) classes += ' today';
+    if (dayBriefs.length > 0) classes += ' has-brief';
+
+    html += '<div class="' + classes + '"';
+
+    if (dayBriefs.length > 0) {
+      var tipText = dayBriefs.map(function(b) { return (b.categoryLabel || b.category) + ' \u2014 ' + (b.targetLabel || b.target); }).join(' | ');
+      html += ' onmouseenter="showCalTooltip(event, \'' + escapeAttr(tipText) + '\')"';
+      html += ' onmouseleave="hideCalTooltip()"';
+    }
+
+    if (isStep1) {
+      html += ' onclick="selectCalDay(' + year + ',' + month + ',' + d + ')"';
+      html += ' style="cursor:pointer;"';
+    }
+
+    html += '>' + d + '</div>';
+  }
+
+  html += '</div>';
+
+  container.innerHTML = html;
+}
+
+function navigateCal(containerId, direction) {
+  if (containerId === 'cal-step1') {
+    state.calMonth += direction;
+    if (state.calMonth > 11) { state.calMonth = 0; state.calYear++; }
+    if (state.calMonth < 0) { state.calMonth = 11; state.calYear--; }
+    renderCalendar('cal-step1', state.calMonth, state.calYear);
+  } else {
+    state.calHistMonth += direction;
+    if (state.calHistMonth > 11) { state.calHistMonth = 0; state.calHistYear++; }
+    if (state.calHistMonth < 0) { state.calHistMonth = 11; state.calHistYear--; }
+    renderCalendar('cal-history', state.calHistMonth, state.calHistYear);
+  }
+}
+
+function selectCalDay(year, month, day) {
+  var date = new Date(year, month, day);
+  var dayOfWeek = date.getDay(); // 0=Sun
+  var dayIds = ['dimanche', 'lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi'];
+  state.day = dayIds[dayOfWeek];
+  state.dayDate = date;
+
+  // Update day buttons
+  var btns = document.querySelectorAll('.day-btn');
+  btns.forEach(function(b) {
+    b.classList.toggle('selected', b.getAttribute('data-day') === state.day);
+  });
+}
+
+// Calendar tooltip
+function showCalTooltip(event, text) {
+  var tip = document.getElementById('cal-tooltip');
+  tip.innerHTML = '<strong>' + text + '</strong>';
+  tip.classList.add('visible');
+  tip.style.left = event.pageX + 10 + 'px';
+  tip.style.top = event.pageY - 30 + 'px';
+}
+
+function hideCalTooltip() {
+  document.getElementById('cal-tooltip').classList.remove('visible');
+}
+
+// ============================================================
+// WEEK HELPERS
+// ============================================================
+
+function getMondayOfWeek(date) {
+  var d = new Date(date);
+  var day = d.getDay();
+  var diff = d.getDate() - day + (day === 0 ? -6 : 1);
+  d.setDate(diff);
+  d.setHours(0, 0, 0, 0);
+  return d;
+}
+
+function getISOWeekString(date) {
+  var d = new Date(date);
+  d.setHours(0, 0, 0, 0);
+  d.setDate(d.getDate() + 3 - ((d.getDay() + 6) % 7));
+  var yearStart = new Date(d.getFullYear(), 0, 1);
+  var weekNo = Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
+  return d.getFullYear() + '-W' + String(weekNo).padStart(2, '0');
+}
+
+function getBriefsForWeekOf(date) {
+  var weekStr = getISOWeekString(date);
+  var briefs = loadBriefs();
+  return briefs.filter(function(b) {
+    return b.weekNumber === weekStr;
+  });
+}
+
+// ============================================================
+// UTILITIES
+// ============================================================
+
+function formatDateFR(date) {
+  var d = new Date(date);
+  return pad(d.getDate()) + '/' + pad(d.getMonth() + 1) + '/' + d.getFullYear();
+}
+
+function pad(n) {
+  return n < 10 ? '0' + n : '' + n;
+}
+
+function truncate(str, len) {
+  if (!str) return '';
+  return str.length > len ? str.substring(0, len) + '\u2026' : str;
+}
+
+function escapeAttr(str) {
+  return str.replace(/'/g, "\\'").replace(/"/g, '&quot;');
+}
+
+function showToast(msg) {
+  var toast = document.getElementById('toast');
+  toast.textContent = msg;
+  toast.classList.add('show');
+  setTimeout(function() { toast.classList.remove('show'); }, 2200);
+}
+</script>
+
+</body>
+</html>
