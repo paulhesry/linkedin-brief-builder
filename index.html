@@ -50,7 +50,8 @@
       line-height: 1.5;
     }
 
-    .wrap { max-width: 720px; margin: 0 auto; }
+    .wrap { width: 100%; max-width: 720px; margin: 0 auto; transition: max-width 0.3s ease; }
+    .wrap.wide { max-width: 1200px; }
 
     /* ── Nav tabs ── */
     .nav-tabs {
@@ -1136,6 +1137,16 @@
 
     .li-action-btn:hover { background: rgba(0,0,0,0.06); }
 
+    /* Mobile mode for LinkedIn post */
+    .li-post.mobile-mode { max-width: 320px; }
+    .li-post.mobile-mode .li-avatar { width: 40px; height: 40px; font-size: 14px; }
+    .li-post.mobile-mode .li-name { font-size: 13px; }
+    .li-post.mobile-mode .li-title, .li-post.mobile-mode .li-meta { font-size: 11px; }
+    .li-post.mobile-mode .li-text { font-size: 13px; line-height: 18px; }
+    .li-post.mobile-mode .li-action-btn { font-size: 10px; padding: 8px 4px; }
+    .li-post.mobile-mode .li-reactions, .li-post.mobile-mode .li-comments-count { font-size: 11px; }
+    .li-post.mobile-mode .li-text.clamped { -webkit-line-clamp: 2; }
+
     /* Preview feed background */
     .li-feed-bg {
       background: #f4f2ee;
@@ -1726,6 +1737,10 @@ function switchTab(tab) {
   }
   if (tab === 'sort') { sortLines(); }
   if (tab === 'preview') { updatePreview(); }
+
+  // Wide layout for tool tabs
+  var wrap = document.querySelector('.wrap');
+  if (wrap) wrap.style.maxWidth = (tab === 'sort' || tab === 'preview') ? '1200px' : '';
 }
 
 // ============================================================
@@ -2785,7 +2800,8 @@ function setDevice(device) {
   document.getElementById('dev-mobile').classList.toggle('active', device === 'mobile');
 
   var post = document.getElementById('li-post');
-  post.style.maxWidth = device === 'desktop' ? '555px' : '320px';
+  post.style.maxWidth = device === 'mobile' ? '320px' : '555px';
+  post.classList.toggle('mobile-mode', device === 'mobile');
 
   // Re-check overflow with new width
   previewExpanded = false;
