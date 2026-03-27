@@ -812,6 +812,16 @@
     .sort-section { display: none; }
     .sort-section.visible { display: block; animation: fadeSlideIn 0.3s ease; }
 
+    .sort-layout {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    @media (min-width: 768px) {
+      .sort-layout { flex-direction: row; }
+    }
+
     .sort-options {
       display: flex;
       flex-direction: column;
@@ -1414,36 +1424,37 @@
     <div class="card">
       <div class="card-title">Tri de lignes par longueur visuelle</div>
       <p style="color:var(--text-2);font-size:13px;margin-bottom:16px;">Colle tes phrases (une par ligne) et trie-les par largeur en pixels pour cr&eacute;er un effet escalier sur LinkedIn.</p>
-      <div class="field">
-        <label>Texte &agrave; trier</label>
-        <textarea id="sort-input" class="textarea" rows="8" placeholder="Une phrase par ligne..."></textarea>
-      </div>
-      <div class="sort-options">
+
+      <div class="sort-options" style="flex-direction:row;flex-wrap:wrap;">
         <label class="sort-check"><input type="checkbox" id="sort-trim"> Supprimer espaces</label>
         <label class="sort-check"><input type="checkbox" id="sort-empty" checked> Ignorer lignes vides</label>
         <label class="sort-check"><input type="checkbox" id="sort-dedup"> Supprimer doublons</label>
       </div>
-      <div class="sort-stats" id="sort-stats"></div>
+
       <div style="display:flex;gap:8px;margin:12px 0;">
-        <button class="option-card sort-dir-btn" id="sort-asc" onclick="selectSortDirection('asc')" style="flex:1;padding:14px;text-align:center;">
+        <button class="option-card sort-dir-btn" id="sort-asc" onclick="selectSortDirection('asc')" style="flex:1;padding:14px;text-align:center;color:var(--white);">
           &#9650; Escalier montant<br><span style="font-size:12px;color:var(--text-2)">court &rarr; long</span>
         </button>
-        <button class="option-card sort-dir-btn" id="sort-desc" onclick="selectSortDirection('desc')" style="flex:1;padding:14px;text-align:center;">
+        <button class="option-card sort-dir-btn" id="sort-desc" onclick="selectSortDirection('desc')" style="flex:1;padding:14px;text-align:center;color:var(--white);">
           &#9660; Escalier descendant<br><span style="font-size:12px;color:var(--text-2)">long &rarr; court</span>
         </button>
       </div>
+
+      <div class="sort-stats" id="sort-stats"></div>
     </div>
 
-    <div class="card" id="sort-result-card" style="display:none;">
-      <div class="card-title">Aper&ccedil;u visuel</div>
-      <div class="sort-bars" id="sort-bars"></div>
-      <div class="field" style="margin-top:16px;">
-        <label>R&eacute;sultat tri&eacute;</label>
-        <textarea id="sort-output" class="textarea" rows="8" readonly></textarea>
+    <div class="sort-layout">
+      <div class="card" style="flex:1;min-width:0;">
+        <div class="card-title">Texte &agrave; trier</div>
+        <textarea id="sort-input" class="textarea" style="width:100%;min-height:400px;resize:vertical;" placeholder="Une phrase par ligne..."></textarea>
       </div>
-      <div style="display:flex;gap:8px;">
-        <button class="btn-action primary" onclick="copySortResult()">&#128203; Copier</button>
-        <button class="btn-action" onclick="clearSort()">Effacer</button>
+      <div class="card" id="sort-result-card" style="flex:1;min-width:0;">
+        <div class="card-title">R&eacute;sultat tri&eacute;</div>
+        <textarea id="sort-output" class="textarea" style="width:100%;min-height:400px;resize:vertical;" readonly placeholder="Le r&eacute;sultat appara&icirc;tra ici..."></textarea>
+        <div style="display:flex;gap:8px;margin-top:12px;">
+          <button class="btn-action primary" onclick="copySortResult()">&#128203; Copier</button>
+          <button class="btn-action" onclick="clearSort()">Effacer</button>
+        </div>
       </div>
     </div>
   </div>
@@ -1473,7 +1484,7 @@
             <button class="fmt-btn" onclick="insertNumberList()" title="Liste num&eacute;rot&eacute;e">1.</button>
           </div>
           <div class="field">
-            <textarea id="prev-text" class="textarea" rows="12" placeholder="&Eacute;cris ton post LinkedIn ici..."></textarea>
+            <textarea id="prev-text" class="textarea" style="width:100%;min-height:350px;resize:vertical;" placeholder="&Eacute;cris ton post LinkedIn ici..."></textarea>
           </div>
           <div class="char-counter">
             <div class="char-count" id="char-count">0 / 3000</div>
@@ -1485,8 +1496,8 @@
 
       <!-- Preview panel -->
       <div style="flex:1;min-width:0;">
-        <div class="card" style="background:transparent;border:none;padding:0;">
-          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+        <div class="card">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
             <div class="card-title" style="margin:0;">Preview LinkedIn</div>
             <div class="device-toggle">
               <button class="device-btn active" id="dev-desktop" onclick="setDevice('desktop')">Desktop</button>
@@ -1494,7 +1505,7 @@
             </div>
           </div>
           <div style="display:flex;justify-content:center;">
-            <div class="li-post" id="li-post">
+            <div class="li-post" id="li-post" style="width:100%;max-width:550px;">
               <div class="li-header">
                 <div class="li-avatar" id="li-avatar">PH</div>
                 <div class="li-author-info">
@@ -2494,7 +2505,7 @@ function sortLines() {
   if (!input) return;
   var raw = input.value;
   if (!raw.trim()) {
-    document.getElementById('sort-result-card').style.display = 'none';
+    document.getElementById('sort-output').value = '';
     document.getElementById('sort-stats').innerHTML = '';
     return;
   }
@@ -2534,28 +2545,6 @@ function sortLines() {
   // Output
   var result = measured.map(function(m) { return m.text; }).join('\n');
   document.getElementById('sort-output').value = result;
-  document.getElementById('sort-result-card').style.display = 'block';
-
-  // Visual bars
-  renderSortBars(measured);
-}
-
-function renderSortBars(measured) {
-  var container = document.getElementById('sort-bars');
-  if (!measured.length) { container.innerHTML = ''; return; }
-
-  var maxW = Math.max.apply(null, measured.map(function(m) { return m.width; }));
-  var display = measured.slice(0, 50); // max 50 lines
-
-  var html = '';
-  for (var i = 0; i < display.length; i++) {
-    var pct = maxW > 0 ? (display[i].width / maxW * 100) : 0;
-    html += '<div class="sort-bar-row">' +
-      '<div class="sort-bar" style="width:' + pct + '%;"></div>' +
-      '<span class="sort-bar-text">' + escapeHTML(truncate(display[i].text, 40)) + '</span>' +
-      '</div>';
-  }
-  container.innerHTML = html;
 }
 
 function copySortResult() {
@@ -2567,9 +2556,7 @@ function copySortResult() {
 function clearSort() {
   document.getElementById('sort-input').value = '';
   document.getElementById('sort-output').value = '';
-  document.getElementById('sort-result-card').style.display = 'none';
   document.getElementById('sort-stats').innerHTML = '';
-  document.getElementById('sort-bars').innerHTML = '';
 }
 
 // Bind sort input events
