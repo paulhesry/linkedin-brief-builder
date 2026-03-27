@@ -808,8 +808,300 @@
       margin: 16px 0;
     }
 
+    /* ── Sort section ── */
+    .sort-section { display: none; }
+    .sort-section.visible { display: block; animation: fadeSlideIn 0.3s ease; }
+
+    .sort-options {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .sort-check {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-2);
+      cursor: pointer;
+    }
+
+    .sort-check input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      accent-color: var(--purple);
+      cursor: pointer;
+    }
+
+    .sort-stats {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+
+    .sort-stat {
+      background: var(--purple-bg);
+      border: 1px solid var(--purple-b);
+      border-radius: 8px;
+      padding: 8px 16px;
+      font-size: 12px;
+      color: var(--text-2);
+      text-align: center;
+    }
+
+    .sort-stat strong {
+      color: var(--purple);
+      font-weight: 700;
+    }
+
+    .sort-bars {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .sort-bar-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .sort-bar {
+      height: 24px;
+      background: linear-gradient(90deg, var(--purple), rgba(97,0,255,0.4));
+      border-radius: 4px;
+      transition: width 0.3s ease;
+      min-width: 4px;
+    }
+
+    .sort-bar-text {
+      font-size: 11px;
+      color: var(--text-muted);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 200px;
+    }
+
+    /* ── Preview section ── */
+    .preview-section { display: none; }
+    .preview-section.visible { display: block; animation: fadeSlideIn 0.3s ease; }
+
+    .device-toggle {
+      display: flex;
+      gap: 4px;
+      background: var(--bg-deep);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 3px;
+      margin-bottom: 16px;
+      width: fit-content;
+    }
+
+    .device-btn {
+      padding: 7px 16px;
+      border: none;
+      border-radius: 6px;
+      background: transparent;
+      color: var(--text-muted);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .device-btn.active {
+      background: var(--purple);
+      color: var(--white);
+    }
+
+    .preview-layout {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .format-toolbar {
+      display: flex;
+      gap: 4px;
+      margin-bottom: 8px;
+    }
+
+    .fmt-btn {
+      width: 34px;
+      height: 34px;
+      border: 1px solid var(--border-input);
+      border-radius: 7px;
+      background: var(--bg-input);
+      color: var(--text-2);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 14px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.15s;
+    }
+
+    .fmt-btn:hover {
+      border-color: var(--purple);
+      color: var(--white);
+    }
+
+    .char-counter {
+      margin-top: 10px;
+      font-size: 12px;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .char-count { font-weight: 700; }
+    .char-count.green { color: var(--green); }
+    .char-count.orange { color: var(--orange); }
+    .char-count.red { color: var(--red); }
+
+    .char-bar {
+      height: 4px;
+      background: var(--bg-input);
+      border-radius: 2px;
+      margin-top: 6px;
+      overflow: hidden;
+    }
+
+    .char-bar-fill {
+      height: 100%;
+      border-radius: 2px;
+      background: var(--green);
+      transition: width 0.2s, background 0.2s;
+      width: 0%;
+    }
+
+    /* ── LinkedIn post mockup ── */
+    .li-post {
+      background: #1b1f23;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+      max-width: 550px;
+      margin: 0 auto;
+      transition: max-width 0.3s;
+    }
+
+    .li-post.mobile { max-width: 375px; }
+
+    .li-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      padding: 12px 16px 0;
+    }
+
+    .li-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: var(--purple);
+      color: var(--white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+
+    .li-author-info { flex: 1; }
+
+    .li-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.9);
+    }
+
+    .li-title, .li-meta {
+      font-size: 12px;
+      color: rgba(255,255,255,0.5);
+    }
+
+    .li-more {
+      color: rgba(255,255,255,0.5);
+      font-size: 20px;
+      padding: 0 4px;
+    }
+
+    .li-content {
+      padding: 12px 16px;
+    }
+
+    .li-text {
+      font-size: 14px;
+      line-height: 1.42;
+      color: rgba(255,255,255,0.9);
+      white-space: pre-wrap;
+      word-break: break-word;
+      overflow: hidden;
+    }
+
+    .li-text.truncated {}
+
+    .li-see-more {
+      color: rgba(255,255,255,0.6);
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      padding: 2px 0;
+    }
+
+    .li-see-more:hover { color: rgba(255,255,255,0.8); }
+
+    .li-engagement {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 16px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .li-reactions {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 12px;
+      color: rgba(255,255,255,0.5);
+    }
+
+    .li-reaction-icons { font-size: 16px; }
+
+    .li-comments-count {
+      font-size: 12px;
+      color: rgba(255,255,255,0.5);
+    }
+
+    .li-actions {
+      display: flex;
+      justify-content: space-around;
+      padding: 4px 8px;
+    }
+
+    .li-action-btn {
+      background: none;
+      border: none;
+      color: rgba(255,255,255,0.5);
+      font-size: 12px;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+      padding: 10px 6px;
+      font-weight: 600;
+    }
+
     /* ── Responsive ── */
     @media (max-width: 520px) {
+      .nav-tabs { flex-wrap: wrap; }
+      .nav-tab { flex: 1 1 calc(50% - 4px); font-size: 12px; padding: 9px 10px; }
+
       .day-grid {
         grid-template-columns: repeat(4, 1fr);
       }
@@ -843,6 +1135,14 @@
 
       h1 { font-size: 22px; }
     }
+
+    @media (min-width: 768px) {
+      .preview-layout {
+        flex-direction: row;
+      }
+      .preview-editor { flex: 1; min-width: 0; }
+      .preview-panel { flex: 1; min-width: 0; }
+    }
   </style>
 </head>
 <body>
@@ -851,8 +1151,10 @@
 
   <!-- Nav tabs -->
   <div class="nav-tabs">
-    <button class="nav-tab active" onclick="switchTab('brief')">Nouveau brief</button>
+    <button class="nav-tab active" onclick="switchTab('brief')">Brief</button>
     <button class="nav-tab" onclick="switchTab('history')">Historique</button>
+    <button class="nav-tab" onclick="switchTab('sort')">Tri lignes</button>
+    <button class="nav-tab" onclick="switchTab('preview')">Preview</button>
   </div>
 
   <!-- ═══ BRIEF TAB ═══ -->
@@ -1107,6 +1409,121 @@
     <div class="history-list" id="history-list"></div>
   </div>
 
+  <!-- ===== Tab Sort ===== -->
+  <div id="tab-sort" class="sort-section" style="display:none">
+    <div class="card">
+      <div class="card-title">Tri de lignes par longueur visuelle</div>
+      <p style="color:var(--text-2);font-size:13px;margin-bottom:16px;">Colle tes phrases (une par ligne) et trie-les par largeur en pixels pour cr&eacute;er un effet escalier sur LinkedIn.</p>
+      <div class="field">
+        <label>Texte &agrave; trier</label>
+        <textarea id="sort-input" class="textarea" rows="8" placeholder="Une phrase par ligne..."></textarea>
+      </div>
+      <div class="sort-options">
+        <label class="sort-check"><input type="checkbox" id="sort-trim"> Supprimer espaces</label>
+        <label class="sort-check"><input type="checkbox" id="sort-empty" checked> Ignorer lignes vides</label>
+        <label class="sort-check"><input type="checkbox" id="sort-dedup"> Supprimer doublons</label>
+      </div>
+      <div class="sort-stats" id="sort-stats"></div>
+      <div style="display:flex;gap:8px;margin:12px 0;">
+        <button class="option-card sort-dir-btn" id="sort-asc" onclick="selectSortDirection('asc')" style="flex:1;padding:14px;text-align:center;">
+          &#9650; Escalier montant<br><span style="font-size:12px;color:var(--text-2)">court &rarr; long</span>
+        </button>
+        <button class="option-card sort-dir-btn" id="sort-desc" onclick="selectSortDirection('desc')" style="flex:1;padding:14px;text-align:center;">
+          &#9660; Escalier descendant<br><span style="font-size:12px;color:var(--text-2)">long &rarr; court</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="card" id="sort-result-card" style="display:none;">
+      <div class="card-title">Aper&ccedil;u visuel</div>
+      <div class="sort-bars" id="sort-bars"></div>
+      <div class="field" style="margin-top:16px;">
+        <label>R&eacute;sultat tri&eacute;</label>
+        <textarea id="sort-output" class="textarea" rows="8" readonly></textarea>
+      </div>
+      <div style="display:flex;gap:8px;">
+        <button class="btn-action primary" onclick="copySortResult()">&#128203; Copier</button>
+        <button class="btn-action" onclick="clearSort()">Effacer</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== Tab Preview ===== -->
+  <div id="tab-preview" class="preview-section" style="display:none">
+    <div class="preview-layout">
+      <!-- Editor panel -->
+      <div style="flex:1;min-width:0;">
+        <div class="card">
+          <div class="card-title">&Eacute;diteur de post</div>
+          <div style="display:flex;gap:8px;margin-bottom:12px;">
+            <div class="field" style="flex:1;margin-bottom:0;">
+              <label>Nom</label>
+              <input type="text" id="prev-name" class="textarea" style="padding:8px 12px;" value="Paul Hesry">
+            </div>
+            <div class="field" style="flex:1;margin-bottom:0;">
+              <label>Titre</label>
+              <input type="text" id="prev-title" class="textarea" style="padding:8px 12px;" value="Growth Marketer">
+            </div>
+          </div>
+          <div class="format-toolbar">
+            <button class="fmt-btn" onclick="applyFormat('bold')" title="Gras"><strong>B</strong></button>
+            <button class="fmt-btn" onclick="applyFormat('italic')" title="Italique"><em>I</em></button>
+            <button class="fmt-btn" onclick="applyFormat('strike')" title="Barr&eacute;">S&#822;</button>
+            <button class="fmt-btn" onclick="insertBulletList()" title="Liste &agrave; puces">&#8226;</button>
+            <button class="fmt-btn" onclick="insertNumberList()" title="Liste num&eacute;rot&eacute;e">1.</button>
+          </div>
+          <div class="field">
+            <textarea id="prev-text" class="textarea" rows="12" placeholder="&Eacute;cris ton post LinkedIn ici..."></textarea>
+          </div>
+          <div class="char-counter">
+            <div class="char-count" id="char-count">0 / 3000</div>
+            <div class="char-bar"><div class="char-bar-fill" id="char-bar-fill"></div></div>
+          </div>
+          <button class="btn-action primary" onclick="copyPreviewText()" style="margin-top:8px;">&#128203; Copier le texte</button>
+        </div>
+      </div>
+
+      <!-- Preview panel -->
+      <div style="flex:1;min-width:0;">
+        <div class="card" style="background:transparent;border:none;padding:0;">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+            <div class="card-title" style="margin:0;">Preview LinkedIn</div>
+            <div class="device-toggle">
+              <button class="device-btn active" id="dev-desktop" onclick="setDevice('desktop')">Desktop</button>
+              <button class="device-btn" id="dev-mobile" onclick="setDevice('mobile')">Mobile</button>
+            </div>
+          </div>
+          <div style="display:flex;justify-content:center;">
+            <div class="li-post" id="li-post">
+              <div class="li-header">
+                <div class="li-avatar" id="li-avatar">PH</div>
+                <div class="li-author-info">
+                  <div class="li-name" id="li-name">Paul Hesry</div>
+                  <div class="li-title" id="li-title">Growth Marketer</div>
+                  <div class="li-meta">Maintenant &middot; &#127760;</div>
+                </div>
+              </div>
+              <div class="li-content">
+                <div class="li-text" id="li-text"><span style="color:#666">Ton post appara&icirc;tra ici...</span></div>
+                <span class="li-see-more" id="li-see-more" onclick="toggleSeeMore()" style="display:none">...voir plus</span>
+              </div>
+              <div class="li-engagement">
+                <div class="li-reactions">&#128077;&#10084;&#65039;&#128161; 42</div>
+                <div style="color:#b0b0b0;">7 commentaires</div>
+              </div>
+              <div class="li-actions">
+                <button class="li-action-btn">&#128077; J'aime</button>
+                <button class="li-action-btn">&#128172; Commenter</button>
+                <button class="li-action-btn">&#128260; Republier</button>
+                <button class="li-action-btn">&#9993; Envoyer</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </div>
 
 <!-- Toast -->
@@ -1241,19 +1658,25 @@ var viewingBriefText = '';
 // ============================================================
 
 function switchTab(tab) {
+  var tabIds = ['brief', 'history', 'sort', 'preview'];
   var tabs = document.querySelectorAll('.nav-tab');
-  tabs[0].classList.toggle('active', tab === 'brief');
-  tabs[1].classList.toggle('active', tab === 'history');
-
-  document.getElementById('tab-brief').style.display = tab === 'brief' ? 'block' : 'none';
-  var histEl = document.getElementById('tab-history');
-  histEl.classList.toggle('visible', tab === 'history');
-  histEl.style.display = tab === 'history' ? 'block' : 'none';
-
+  for (var i = 0; i < tabIds.length; i++) {
+    var isActive = tabIds[i] === tab;
+    if (tabs[i]) tabs[i].classList.toggle('active', isActive);
+    var el = document.getElementById('tab-' + tabIds[i]);
+    if (el) {
+      el.style.display = isActive ? 'block' : 'none';
+      if (el.classList.contains('history-section')) {
+        el.classList.toggle('visible', isActive);
+      }
+    }
+  }
   if (tab === 'history') {
     renderCalendar('cal-history', state.calHistMonth, state.calHistYear);
     renderHistory();
   }
+  if (tab === 'sort') { sortLines(); }
+  if (tab === 'preview') { updatePreview(); }
 }
 
 // ============================================================
@@ -2041,6 +2464,331 @@ function getBriefsForWeekOf(date) {
 }
 
 // ============================================================
+// SORT TOOL
+// ============================================================
+
+var sortCanvasCtx = null;
+var sortDirection = 'asc';
+
+function getSortCanvasCtx() {
+  if (sortCanvasCtx) return sortCanvasCtx;
+  var canvas = document.createElement('canvas');
+  sortCanvasCtx = canvas.getContext('2d');
+  sortCanvasCtx.font = '14px -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif';
+  return sortCanvasCtx;
+}
+
+function measureTextWidth(text) {
+  return getSortCanvasCtx().measureText(text).width;
+}
+
+function selectSortDirection(dir) {
+  sortDirection = dir;
+  document.getElementById('sort-asc').classList.toggle('selected', dir === 'asc');
+  document.getElementById('sort-desc').classList.toggle('selected', dir === 'desc');
+  sortLines();
+}
+
+function sortLines() {
+  var input = document.getElementById('sort-input');
+  if (!input) return;
+  var raw = input.value;
+  if (!raw.trim()) {
+    document.getElementById('sort-result-card').style.display = 'none';
+    document.getElementById('sort-stats').innerHTML = '';
+    return;
+  }
+
+  var lines = raw.split('\n');
+  var trim = document.getElementById('sort-trim').checked;
+  var skipEmpty = document.getElementById('sort-empty').checked;
+  var dedup = document.getElementById('sort-dedup').checked;
+
+  if (trim) lines = lines.map(function(l) { return l.trim(); });
+  if (skipEmpty) lines = lines.filter(function(l) { return l.length > 0; });
+  if (dedup) {
+    var seen = {};
+    lines = lines.filter(function(l) {
+      if (seen[l]) return false;
+      seen[l] = true;
+      return true;
+    });
+  }
+
+  // Measure each line
+  var measured = lines.map(function(l) {
+    return { text: l, width: measureTextWidth(l) };
+  });
+
+  // Sort
+  measured.sort(function(a, b) {
+    return sortDirection === 'asc' ? a.width - b.width : b.width - a.width;
+  });
+
+  // Stats
+  var totalChars = measured.reduce(function(sum, m) { return sum + m.text.length; }, 0);
+  document.getElementById('sort-stats').innerHTML =
+    '<span class="sort-stat"><strong>' + measured.length + '</strong> lignes</span>' +
+    '<span class="sort-stat"><strong>' + totalChars + '</strong> caract\u00e8res</span>';
+
+  // Output
+  var result = measured.map(function(m) { return m.text; }).join('\n');
+  document.getElementById('sort-output').value = result;
+  document.getElementById('sort-result-card').style.display = 'block';
+
+  // Visual bars
+  renderSortBars(measured);
+}
+
+function renderSortBars(measured) {
+  var container = document.getElementById('sort-bars');
+  if (!measured.length) { container.innerHTML = ''; return; }
+
+  var maxW = Math.max.apply(null, measured.map(function(m) { return m.width; }));
+  var display = measured.slice(0, 50); // max 50 lines
+
+  var html = '';
+  for (var i = 0; i < display.length; i++) {
+    var pct = maxW > 0 ? (display[i].width / maxW * 100) : 0;
+    html += '<div class="sort-bar-row">' +
+      '<div class="sort-bar" style="width:' + pct + '%;"></div>' +
+      '<span class="sort-bar-text">' + escapeHTML(truncate(display[i].text, 40)) + '</span>' +
+      '</div>';
+  }
+  container.innerHTML = html;
+}
+
+function copySortResult() {
+  var text = document.getElementById('sort-output').value;
+  copyToClipboard(text);
+  showToast('R\u00e9sultat copi\u00e9 !');
+}
+
+function clearSort() {
+  document.getElementById('sort-input').value = '';
+  document.getElementById('sort-output').value = '';
+  document.getElementById('sort-result-card').style.display = 'none';
+  document.getElementById('sort-stats').innerHTML = '';
+  document.getElementById('sort-bars').innerHTML = '';
+}
+
+// Bind sort input events
+document.addEventListener('DOMContentLoaded', function() {
+  var sortInput = document.getElementById('sort-input');
+  if (sortInput) {
+    sortInput.addEventListener('input', sortLines);
+  }
+  var checks = ['sort-trim', 'sort-empty', 'sort-dedup'];
+  for (var i = 0; i < checks.length; i++) {
+    var cb = document.getElementById(checks[i]);
+    if (cb) cb.addEventListener('change', sortLines);
+  }
+  // Init preview listeners
+  var prevText = document.getElementById('prev-text');
+  if (prevText) prevText.addEventListener('input', updatePreview);
+  var prevName = document.getElementById('prev-name');
+  if (prevName) prevName.addEventListener('input', updatePreview);
+  var prevTitle = document.getElementById('prev-title');
+  if (prevTitle) prevTitle.addEventListener('input', updatePreview);
+  // Init default sort direction
+  selectSortDirection('asc');
+});
+
+// ============================================================
+// PREVIEW TOOL
+// ============================================================
+
+var unicodeBold = {};
+var unicodeItalic = {};
+var unicodeMapsReady = false;
+var previewDevice = 'desktop';
+var previewExpanded = false;
+
+function initUnicodeMaps() {
+  if (unicodeMapsReady) return;
+  // Bold: A-Z = U+1D400, a-z = U+1D41A, 0-9 = U+1D7CE
+  var boldUpperStart = 0x1D400;
+  var boldLowerStart = 0x1D41A;
+  var boldDigitStart = 0x1D7CE;
+  for (var i = 0; i < 26; i++) {
+    unicodeBold[String.fromCharCode(65 + i)] = String.fromCodePoint(boldUpperStart + i);
+    unicodeBold[String.fromCharCode(97 + i)] = String.fromCodePoint(boldLowerStart + i);
+  }
+  for (var d = 0; d < 10; d++) {
+    unicodeBold[String(d)] = String.fromCodePoint(boldDigitStart + d);
+  }
+
+  // Italic: A-Z = U+1D434, a-z = U+1D44E (h = U+210E exception)
+  var italicUpperStart = 0x1D434;
+  var italicLowerStart = 0x1D44E;
+  for (var j = 0; j < 26; j++) {
+    unicodeItalic[String.fromCharCode(65 + j)] = String.fromCodePoint(italicUpperStart + j);
+    if (j === 7) { // 'h' exception
+      unicodeItalic['h'] = String.fromCodePoint(0x210E);
+    } else {
+      unicodeItalic[String.fromCharCode(97 + j)] = String.fromCodePoint(italicLowerStart + j);
+    }
+  }
+  unicodeMapsReady = true;
+}
+
+function applyFormat(type) {
+  initUnicodeMaps();
+  var ta = document.getElementById('prev-text');
+  var start = ta.selectionStart;
+  var end = ta.selectionEnd;
+  if (start === end) return; // no selection
+
+  var selected = ta.value.substring(start, end);
+  var transformed = '';
+
+  if (type === 'bold') {
+    transformed = selected.split('').map(function(c) { return unicodeBold[c] || c; }).join('');
+  } else if (type === 'italic') {
+    transformed = selected.split('').map(function(c) { return unicodeItalic[c] || c; }).join('');
+  } else if (type === 'strike') {
+    transformed = selected.split('').map(function(c) { return c + '\u0336'; }).join('');
+  }
+
+  ta.value = ta.value.substring(0, start) + transformed + ta.value.substring(end);
+  ta.focus();
+  ta.selectionStart = start;
+  ta.selectionEnd = start + transformed.length;
+  updatePreview();
+}
+
+function insertBulletList() {
+  var ta = document.getElementById('prev-text');
+  var start = ta.selectionStart;
+  var end = ta.selectionEnd;
+  var selected = ta.value.substring(start, end);
+  if (!selected) return;
+
+  var lines = selected.split('\n');
+  var result = lines.map(function(l) {
+    return l.trim() ? '\u2022 ' + l.trim() : l;
+  }).join('\n');
+
+  ta.value = ta.value.substring(0, start) + result + ta.value.substring(end);
+  ta.focus();
+  updatePreview();
+}
+
+function insertNumberList() {
+  var ta = document.getElementById('prev-text');
+  var start = ta.selectionStart;
+  var end = ta.selectionEnd;
+  var selected = ta.value.substring(start, end);
+  if (!selected) return;
+
+  var lines = selected.split('\n');
+  var num = 1;
+  var result = lines.map(function(l) {
+    return l.trim() ? (num++) + '. ' + l.trim() : l;
+  }).join('\n');
+
+  ta.value = ta.value.substring(0, start) + result + ta.value.substring(end);
+  ta.focus();
+  updatePreview();
+}
+
+function updatePreview() {
+  var name = document.getElementById('prev-name').value || 'Nom';
+  var title = document.getElementById('prev-title').value || 'Titre';
+  var text = document.getElementById('prev-text').value;
+
+  // Update author info
+  document.getElementById('li-name').textContent = name;
+  document.getElementById('li-title').textContent = title;
+  document.getElementById('li-avatar').textContent = getInitials(name);
+
+  // Update text content
+  var textEl = document.getElementById('li-text');
+  var seeMoreEl = document.getElementById('li-see-more');
+
+  if (!text.trim()) {
+    textEl.innerHTML = '<span style="color:#666">Ton post appara\u00eetra ici...</span>';
+    seeMoreEl.style.display = 'none';
+  } else {
+    previewExpanded = false;
+    applyTruncation(text);
+  }
+
+  // Update char counter
+  updateCharCounter(text.length);
+}
+
+function applyTruncation(text) {
+  var textEl = document.getElementById('li-text');
+  var seeMoreEl = document.getElementById('li-see-more');
+  var limit = previewDevice === 'desktop' ? 210 : 140;
+
+  if (previewExpanded || text.length <= limit) {
+    textEl.textContent = text;
+    textEl.style.whiteSpace = 'pre-wrap';
+    seeMoreEl.style.display = previewExpanded && text.length > limit ? 'inline' : 'none';
+    if (previewExpanded) seeMoreEl.textContent = '...voir moins';
+  } else {
+    textEl.textContent = text.substring(0, limit);
+    textEl.style.whiteSpace = 'pre-wrap';
+    seeMoreEl.style.display = 'inline';
+    seeMoreEl.textContent = '...voir plus';
+  }
+}
+
+function toggleSeeMore() {
+  previewExpanded = !previewExpanded;
+  var text = document.getElementById('prev-text').value;
+  applyTruncation(text);
+}
+
+function setDevice(device) {
+  previewDevice = device;
+  document.getElementById('dev-desktop').classList.toggle('active', device === 'desktop');
+  document.getElementById('dev-mobile').classList.toggle('active', device === 'mobile');
+
+  var post = document.getElementById('li-post');
+  post.style.maxWidth = device === 'desktop' ? '550px' : '375px';
+
+  // Re-apply truncation
+  previewExpanded = false;
+  var text = document.getElementById('prev-text').value;
+  if (text.trim()) applyTruncation(text);
+}
+
+function updateCharCounter(count) {
+  var countEl = document.getElementById('char-count');
+  var barEl = document.getElementById('char-bar-fill');
+  countEl.textContent = count + ' / 3000';
+
+  var pct = Math.min(count / 3000 * 100, 100);
+  barEl.style.width = pct + '%';
+
+  if (count > 2900) {
+    barEl.style.background = '#e74c3c';
+    countEl.style.color = '#e74c3c';
+  } else if (count > 2500) {
+    barEl.style.background = '#f39c12';
+    countEl.style.color = '#f39c12';
+  } else {
+    barEl.style.background = 'var(--purple)';
+    countEl.style.color = 'var(--text-2)';
+  }
+}
+
+function getInitials(name) {
+  var parts = name.trim().split(/\s+/);
+  if (parts.length >= 2) return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+  return name.substring(0, 2).toUpperCase();
+}
+
+function copyPreviewText() {
+  var text = document.getElementById('prev-text').value;
+  copyToClipboard(text);
+  showToast('Post copi\u00e9 !');
+}
+
+// ============================================================
 // UTILITIES
 // ============================================================
 
@@ -2060,6 +2808,12 @@ function truncate(str, len) {
 
 function escapeAttr(str) {
   return str.replace(/'/g, "\\'").replace(/"/g, '&quot;');
+}
+
+function escapeHTML(str) {
+  var div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
 }
 
 function showToast(msg) {
